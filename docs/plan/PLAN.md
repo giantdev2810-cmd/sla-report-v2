@@ -29,6 +29,7 @@ validation snapshot; it does not grant permission to start another task.
 | [T03 attempt 2](tasks/T03.md) | Restart inspection with private raw capture | Done |
 | [T03A](tasks/T03A.md) | API data audit tool | Approved — deferred by user |
 | [T04](tasks/T04.md) | Choose initial data flow and module boundaries | Done |
+| [T05](tasks/T05.md) | Exclude reverting and reverted events | Done |
 
 ## Approval and review loop
 
@@ -105,8 +106,11 @@ proposal with raw-output capture; attempt 2 is explicitly accepted and Done. T04
 first documentation proposal was approved by "ừ". The revised design and review
 gate were approved by the later "duyệt". The user then reported "đã review" and
 explicitly accepted with "chấp nhận"; T04 is Done.
-T05–T22, including the inserted T10A–T10D steps, remain **Draft**; their
-implementation decisions and execution approval are pending. The user approved
+T05's pure rule-2 helper was approved by "duyệt t05" and explicitly accepted
+with "chấp nhận t05"; it is Done;
+see its task record for the chain assumption and checks. T06–T22, including
+inserted T10A–T10D, remain **Draft**; their implementation choices and execution
+approval are pending. The user approved
 W09's roadmap revision with "duyệt", then accepted the reviewed result with
 "đã chấp nhận review"; W09 is Done. Acceptance does not approve the application
 tasks described by the revised roadmap. T03A is deferred
@@ -276,4 +280,14 @@ evidence. The user then explicitly accepted the reviewed work with
 "đã chấp nhận review". W09 is Done; accepted revision 059cba7 was pushed and
 [PR #10](https://github.com/giantdev2810-cmd/sla-report-v2/pull/10) opened into main
 after acceptance. Merge needs separate approval. T03A stays deferred and T05
-needs its own proposal.
+needed its own proposal at that checkpoint.
+
+The user subsequently confirmed the non-restoring reversal-chain interpretation
+and requested its DECISIONS assumption, then approved the full T05 proposal with
+"duyệt t05". See [T05](tasks/T05.md): pure eligible_events helper and synthetic
+tests only. After review, the user stated "tôi là người xóa chúng, chấp nhận t05",
+confirming ownership of the unrelated starter deletions and accepting T05. T05
+is Done; its approved seven-file commit/push/PR may now proceed. Starter deletions
+remain outside this task's delivery; merge still needs separate approval.
+The branch is based on main 124e14a (PR #10 observed merged). T03A stays deferred;
+T06 and later tasks need separate proposals.

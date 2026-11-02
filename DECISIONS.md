@@ -6,6 +6,7 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 
 <!-- Anything the brief did not say that you had to decide. -->
 - I assume the Reviewers are both human and agents
+- I assume reverting a reversal does not restore an earlier event. If B reverts A and C reverts B, all three are excluded under rule 2.
 
 ## What I found in the API or data
 
@@ -25,6 +26,7 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 - Agreed with Codex on a candidate-controlled workflow: each small task and its technical decisions require approval before implementation, followed by a code walkthrough and candidate review. `docs/plan/PLAN.md` records scope and approval separately from implementation and verification so generated code remains reviewable.
 - Codex adapted the canceled inspection script to retain local raw bodies and generated offline tests for byte preservation, request limits, safe output, and failure handling. Eleven tests passed before the replacement live run; Codex reconciled eleven saved bodies with metadata/output, then identified repeated feed sequences and post-change payload timestamps through offline review. The local `write-decisions` skill guided these evidence-based notes; capture checks do not establish SLA correctness.
 - Codex initially proposed feed-only bootstrap without established historical coverage. After the candidate confirmed that history is incomplete, Codex revised the approved T04 design to request/event baseline loading and feed updates, leaving other questions explicitly open. The local `write-decisions` skill guided separating candidate-reported facts, bounded capture evidence, and design choices. The candidate also requested PR creation only after review and acceptance; this architecture is not an implemented or tested report.
+- Codex implemented the pure rule-2 filter and synthetic tests after candidate approval, including the agreed non-restoring reversal chain. Ten rule cases and the existing health test passed; these checks cover the helper's behavior, not live data completeness or the remaining SLA rules. The local `write-decisions` skill guided recording the interpretation as an assumption rather than an API finding.
 
 ## Trade-offs and what I would do next
 

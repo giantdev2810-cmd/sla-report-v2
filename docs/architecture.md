@@ -4,7 +4,9 @@ Revised T04 design approved by the user's "duyệt" after the proposal combining
 request/event acquisition and the PR-after-review workflow. This describes the
 chosen direction, not implemented behavior. The candidate reported "đã review"
 and explicitly accepted with "chấp nhận"; T04 is Done as a documentation task.
-Ingestion, storage, SLA calculation, and refresh are not implemented.
+T05 implements only rule 2's eligible_events helper, explicitly accepted by the
+candidate with "chấp nhận t05". Ingestion, storage, remaining SLA calculations, endpoints, and refresh
+are not implemented beyond the starter behavior.
 
 ## Sources and evidence
 
@@ -52,8 +54,9 @@ HTTP dates --> main --> report --> pure SLA rules --> rows + summary --> main JS
 
 ## Module boundaries
 
-Future paths are under `app/app/`; only main.py and helpdesk.py exist today.
-Each implementation task still requires approved interfaces and checks.
+Paths are under `app/app/`. main.py and helpdesk.py are the starter modules;
+sla.py now contains only eligible_events for rule 2. Other modules and remaining
+rules are future work requiring approved interfaces and checks.
 
 | Module | Responsibility | Boundary |
 | --- | --- | --- |
@@ -96,6 +99,13 @@ Each implementation task still requires approved interfaces and checks.
 | 5 | Inclusive targets: High 60, Medium 240, Low/null 480 |
 | 6 | Last eligible completion versus latest eligible non-null event deadline, parsed site-locally; strictly after |
 | 7 | Contract nulls when response, completion, or deadline is absent |
+
+T05's eligible_events filters a single request's event dictionaries before future
+event-based calculations. It preserves retained payloads/order without mutation;
+two passes and a set cost O(n) time and O(n) space. It assumes valid id/reverts_id
+fields and does not validate/deduplicate input or establish complete history.
+The candidate-approved chain interpretation excludes A/B/C for B->A and C->B,
+without restoring A. This is recorded in DECISIONS; no endpoint uses the helper yet.
 
 Responder counts aggregate only included result rows, using current staff from
 the same snapshot rather than historical actor names.
