@@ -40,6 +40,11 @@ workflow documentation plus an ignore rule only. Application code is unchanged.
   [PR #4](https://github.com/giantdev2810-cmd/sla-report-v2/pull/4) already existed;
   its branch/base and OPEN state were verified, and its empty body was populated
   with scope/checks. This delivery record is a checkpoint on the same branch.
+- A later check observed PR #4 merged at 09:21:25 UTC as `ec9927f`, containing
+  implementation commit `4b83737`. The agent did not execute a merge. The rule
+  and ignore entry are therefore on origin/main. Record-only commit `f5d2db3`
+  was pushed after the merge and remains outside main, along with this status
+  correction. No additional PR or merge was performed for those record updates.
 
 ## Implementation and historical evidence
 
@@ -75,7 +80,9 @@ correctness, readiness, performance, refresh, or pagination guarantees.
 
 ## Next action
 
-Check final branch refs when resuming, then obtain explicit candidate acceptance
-of W08 and separate approval to merge PR #4. Keep T03 review/merge decisions separate.
+Check final branch refs when resuming and obtain explicit candidate acceptance of
+W08. PR #4 is already merged; record updates made after its merge remain on the
+W08 branch. Any further PR/merge for them needs approved handling. Keep T03's
+review/merge decisions separate.
 Any change to the inspection script or new live request budget needs a concrete
 proposal and approval. Do not regenerate missing T03 raw responses.
