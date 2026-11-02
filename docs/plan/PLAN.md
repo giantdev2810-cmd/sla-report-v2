@@ -26,6 +26,7 @@ validation snapshot; it does not grant permission to start another task.
 | [T02](tasks/T02.md) | Install pinned dependencies and verify the starter | Done |
 | [T03 attempt 1](tasks/T03-attempt-1.md) | Inspect a bounded practice API sample (canceled first attempt) | Canceled |
 | [T03 attempt 2](tasks/T03.md) | Restart inspection with private raw capture | Done |
+| [T04](tasks/T04.md) | Choose initial data flow and module boundaries | Done |
 
 ## Approval and review loop
 
@@ -38,16 +39,25 @@ validation snapshot; it does not grant permission to start another task.
    up-to-date `main` before editing. Use `<type>/<task-id>-<slug>`. Implement the
    approved scope and run agreed checks. Pause dependent work if new decisions
    arise; present their rationale before making them.
-5. After implementation and checks, commit the approved scope/message, push the
-   task branch, and open a PR targeting `main`. Obtain approval for any Git action
-   missing from the task proposal. Record the branch, commit, and PR URL.
-6. Explain what changed, code locations, one input-to-output walkthrough, actual
+5. After implementation and checks, explain what changed, code locations, one
+   input-to-output walkthrough, actual
    check results/limitations, and points needing candidate review.
-7. Mark the task record and index `Awaiting review`. Answer questions and revise
+6. Mark the task record and index `Awaiting review`. Do not create a PR, including
+   a draft PR. Answer questions and revise
    as agreed. Mark `Done` only when the candidate accepts; obtain approval for
    the next task.
+7. Only after candidate review and explicit acceptance of the completed task,
+   open the approved PR targeting `main`. Follow the proposal's approved scope,
+   message, and timing for commit/push; earlier approval to commit/push does not
+   authorize a PR before review. Record acceptance evidence, actual branch,
+   commit, and PR URL. Obtain approval for Git actions missing from the proposal.
 8. Merge a PR only with separate explicit approval. Creating a PR or accepting
    a task does not authorize merging; merging alone does not accept the task.
+
+This review gate was requested in the revised T04 proposal and approved by the
+user's "duyệt". It applies to T04 and active, future, and resumed tasks, including
+T03A. Earlier records describe historical delivery order and do not override it.
+Approval to implement, passing checks, or silence is not candidate acceptance.
 
 W07 records this workflow on the existing branch. The user separately approved
 publishing the earlier documentation on `feat/sla-report`; see the
@@ -69,7 +79,7 @@ acceptance. Do not pre-fill speculative technical decisions for the whole roadma
 | ID and goal | One behavior or tightly related unit of work |
 | Dependencies | Prior tasks or unresolved conditions |
 | Scope | Expected files, included work, and important boundaries |
-| Git delivery | Approved branch/base, commit scope/message, PR target `main`; actual branch, commit, PR URL, and separate merge approval |
+| Git delivery | Approved branch/base, commit scope/message/timing, PR target `main`; review/acceptance before PR creation; actual branch, commit, PR URL, and separate merge approval |
 | Decisions | Proposed choice, reason, relevant alternative, and cost/limitation; approval tracked separately |
 | Acceptance | Observable results the candidate can review |
 | Verification | Meaningful examples/checks and their scope |
@@ -89,9 +99,12 @@ expansion. Approval of this document is not blanket implementation approval.
 
 T01 and T02 are accepted. The user canceled T03's first attempt; PR #3 is closed,
 and its branch/history are retained. The user approved the concrete T03 restart
-proposal with raw-output capture; attempt 2 is explicitly accepted and Done. T04–T22 remain
-**Draft**; technical decisions
-and execution approval are pending. Criteria come from the supplied specification. Explain
+proposal with raw-output capture; attempt 2 is explicitly accepted and Done. T04's
+first documentation proposal was approved by "ừ". The revised design and review
+gate were approved by the later "duyệt". The user then reported "đã review" and
+explicitly accepted with "chấp nhận"; T04 is Done.
+T05–T22 remain **Draft**; technical decisions and execution approval are pending.
+Criteria come from the supplied specification. Explain
 proposed regrouping and split further if the diff would be difficult to review.
 
 ### Preparation
@@ -169,7 +182,7 @@ offline checks, one new bounded live run, and commit/push/PR delivery. The named
 stash remains as backup. See [T03 attempt 2](tasks/T03.md) for the precise budget
 and evidence. Restarting T03 does not reset upstream data changes. No old raw
 response reconstruction, application change, further request budget, or merge is
-authorized. T04 still needs its own proposal after candidate review.
+authorized by T03. The later, separately approved T04 proposal is recorded below.
 
 Attempt 2 completed one 11-GET run with 11 raw bodies, request metadata, and
 sanitized output retained locally. Its request budget is consumed; do not rerun
@@ -179,5 +192,26 @@ offline review findings; see the task record for confirmed repeated feed sequenc
 payload timing, and coverage limits, then explicitly requested "đẩy lên và chốt t03".
 T03 attempt 2 is Done. The four-file records were committed with the approved
 message and pushed on its task branch; follow-up PR #6 targets main.
-Merge remains separate. See the task record for delivery evidence. T04 needs its
-own concrete proposal and approval; no ingestion design has been selected.
+PR #6 was subsequently observed merged as f782423. See the T03 record for earlier
+delivery evidence. The user requested the next task and approved the concrete
+T04 proposal with "ừ". See [T04](tasks/T04.md) and [architecture](../architecture.md)
+for the original design checkpoint, Git delivery, and review points.
+At the original checkpoint T04 was Awaiting review; no application implementation
+or T04 PR merge was authorized.
+The user later requested "bỏ pr t04"; PR #7 is CLOSED, with branch/commits retained.
+This does not cancel or accept T04. The user reported insufficient feed history;
+the request/event bootstrap revision initially awaited approval. T03A is deferred and
+its uncommitted records are preserved in the named stash recorded in STATE.
+The user then confirmed the feed lacks full history, requested inspection of local
+evidence, and left other questions open. The two retained feed pages remain
+unfinished; they do not independently prove historical coverage. The original
+feed-only design is superseded, with the distinction recorded in architecture
+and T04. The user then requested a revised T04 proposal plus a PR-after-review
+rule, and approved that concrete six-file proposal with "duyệt". The current
+design uses requests/events for baseline data and the feed for updates, leaving
+the other questions open. No additional live inspection is authorized. The user
+subsequently reported "đã review" and explicitly accepted with "chấp nhận". T04
+is Done; approved revision commit 86d7a9c was pushed and replacement
+[PR #9](https://github.com/giantdev2810-cmd/sla-report-v2/pull/9) opened into main
+after acceptance. PR #7 stays closed; merge needs separate approval. T03A stays
+deferred and T05 still needs its own proposal.

@@ -45,12 +45,20 @@ handling plan.
   its task. Each new task gets its own branch.
 - Inspect the working tree first. If it contains changes outside the task,
   preserve them and agree on their handling before creating the task branch.
-- Once implementation and agreed checks are complete, commit only the approved
-  scope using the approved message, push the task branch, and open a pull request
-  targeting `main`. Record the branch, commit, and PR URL in the task record.
-- Keep the task `Awaiting review` until the candidate explicitly accepts it.
-  Creating a PR does not authorize merging it; merge requires separate explicit
-  approval. A merge does not establish candidate acceptance by itself.
+- Once implementation and agreed checks are complete, explain the result and
+  keep the task `Awaiting review`. Do not create a PR, including a draft PR,
+  before candidate review and explicit acceptance of the completed task.
+- Address review changes under their approved scope. Approval to implement a task,
+  passing checks, silence, or creation of a commit is not review acceptance.
+- Only after review and explicit acceptance, open the approved PR targeting
+  `main`. Commit/push scope, message, and timing must follow the approved proposal;
+  approval for earlier commit/push never bypasses the PR review gate. Record
+  actual branch, commit, acceptance evidence, and PR URL in the task record.
+- Merge requires separate explicit approval. Acceptance or creation of a PR does
+  not authorize merging. A merge does not establish candidate acceptance itself.
+- This review gate applies to T04 and all active, future, or resumed tasks,
+  including deferred T03A. Earlier task records retain their historical delivery
+  order; they do not override this current rule.
 
 ## Comments and docstrings
 
@@ -158,8 +166,10 @@ budget; keep documentation proportionate to that budget.
   complete but unaccepted work `Awaiting review`.
 - Run checks appropriate to the change. Record actual outcomes and their limits;
   syntax checks and health checks do not establish report correctness.
-- For new tasks covered by the branch/PR rule, complete the approved Git delivery
-  steps and include the PR URL in the handoff. Keep merge approval separate.
+- Before candidate acceptance, hand off the checked work for review and state that
+  PR creation is pending. After acceptance, complete only approved Git delivery
+  steps and record the PR URL. Follow approved commit/push timing and keep merge
+  approval separate.
 - Update `docs/STATE.md` after a meaningful checkpoint or before handing off
   unfinished work. Keep current facts, the scope of validation, unresolved points,
   relevant files, and a concrete next step. Replace resolved blockers; do not turn
