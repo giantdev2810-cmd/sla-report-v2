@@ -18,3 +18,6 @@ htmlcov/
 
 # Local application state
 /data/
+
+# Private raw API inspection output (may contain cursors)
+/.local/inspect/

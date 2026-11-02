@@ -124,6 +124,32 @@ working directories and commands in `docs/development.md` to avoid package-path
 confusion. Implement the graded levels in order within the take-home's three-hour
 budget; keep documentation proportionate to that budget.
 
+## API inspection output
+
+- For each approved API inspection run, create a separate local directory at
+  `.local/inspect/<task-id>/<UTC-timestamp>/` before the first request. Use a
+  filename-safe UTC timestamp. Confirm that Git ignores this directory.
+- Save every response body in full, unchanged, including non-success responses.
+  Keep raw bodies separate from the inspection's complete sanitized output and
+  metadata. Do not replace raw bodies with parsed, reformatted, or redacted JSON.
+- Record the request time, endpoint, non-sensitive parameters, HTTP status, and
+  the corresponding raw-body file in metadata. Record transport failures without
+  inventing a response body or status. Do not record authorization headers,
+  configured tokens, or raw cursors in metadata or sanitized output. Raw cursors
+  returned inside response bodies stay only in the private raw files.
+- Write evidence as requests complete and record the run's final success or
+  failure. If the directory cannot be created or any output cannot be saved,
+  stop the inspection without making further requests. Do not repeat a request
+  merely to recreate missing output.
+- Keep `.local/inspect/` ignored and local; do not commit or publish its contents.
+  The task record names the local directory and shares only sanitized evidence.
+  Raw capture supports later review without another API call, at the cost of
+  keeping detailed evidence on the machine rather than in the public repository.
+- This requirement applies to future inspections. An existing script that only
+  prints summaries must gain approved capture support before another live run.
+  The rule itself does not authorize script changes, further API access, or
+  reconstruction of earlier responses. Obtain approval for those scopes first.
+
 ## Finish a checkpoint
 
 - Keep detailed evidence and approval/review status in the task record under
@@ -148,5 +174,6 @@ budget; keep documentation proportionate to that budget.
 - Create or update `docs/architecture.md` when an implementation design is chosen
   or changes. Clearly label any proposal that has not been implemented.
 - Keep credentials, authorization headers, `.env` contents, and raw cursors out
-  of shared context. Summarize relevant evidence rather than copying large logs.
+  of shared context. Raw API bodies belong only in the ignored local inspection
+  directory above; share sanitized evidence rather than copying private logs.
 - Report what changed, what was checked, and material remaining uncertainty.
