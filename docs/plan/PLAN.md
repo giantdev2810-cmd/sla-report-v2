@@ -1,91 +1,72 @@
 # Work plan and review process
 
-## Agreement and current authorization
+## Document layout
 
-The candidate requested small reviewable tasks, explanations before actions,
-approval of every technical decision with its rationale, and short reports after
-implementation. The candidate agreed to the proposed workflow in the message
-"ừ" immediately after that discussion. This authorizes documenting the workflow
-and drafting this plan, not implementing the roadmap below.
+This file contains the approval/review process, roadmap, task status index, and
+next step. Detailed records of performed work live in [tasks/](tasks/), including
+work Awaiting review. Task records preserve approval evidence and actual results;
+only explicit candidate acceptance changes a task to Done.
 
-Task **W01 — document the workflow**: update `../AGENTS.md`, create this
-plan, and update `STATE.md` and the AI documentation in `../DECISIONS.md`.
-Verification covers document consistency, references, and whitespace.
-Status: **Awaiting review**. User acceptance is pending. No application code, API
-discovery, dependency installation, or new commit is included in W01.
+Read [AGENTS](../../AGENTS.md), this plan, the relevant task record, and
+[STATE](../STATE.md) when resuming. STATE holds the current implementation and
+validation snapshot; it does not grant permission to start another task.
 
-Task **W02 — correct DECISIONS section semantics**:
+## Task status index
 
-- Scope: update `../skills/write-decisions/SKILL.md` and related AGENTS guidance;
-  remove the misplaced API-call status and framework selection from DECISIONS.
-  Keep pure environment status in STATE, including the status previously appended
-  to an AI-use sentence. Do not invent a rationale to populate trade-offs.
-- Approval: the user's message "duyệt cả 2", following the proposal covering both
-  rule changes and DECISIONS corrections, approves these changes.
-- Decisions: enforce each heading's meaning; assumptions resolve specification
-  gaps, API findings require observations, and empty sections are acceptable.
-  AGENTS points to the skill rather than duplicating its definitions.
-- Verification: skill-creator validator, document consistency, and whitespace.
-- Result: skill and AGENTS now require factual support and correct section
-  placement. Removed the API-call status and framework selection from DECISIONS;
-  removed standalone environment status from its AI-use entry. The implementation
-  facts remain in STATE. No unsupported trade-off rationale was added.
-- Checks: skill-creator validator returned `Skill is valid!`; document inspection,
-  whitespace checks, and `git diff --check` passed. Structural validation does not
-  prove future writing behavior. No runtime test was needed for these docs.
-- Status: **Awaiting review**; user acceptance of the result is pending.
-- Bookkeeping: update this record and STATE without changing application code,
-  dependencies, practice API data, or Git history.
-
-Current task **W03 — publish the existing work on a GitHub branch**:
-
-- Approval: the user requested pushing all work on a branch, then selected
-  "Tạo repository mới public tên sla-report-v2" when asked for the destination.
-- Destination: new public repository `giantdev2810-cmd/sla-report-v2`, using the
-  account confirmed by the GitHub connection. Local branch/message presented:
-  `chore/setup-agent-context` and
-  `chore: prepare FastAPI workspace and agent context`.
-- Scope: retain the original starter commit and publish the current setup,
-  documentation, skill, and application starter. Exclude credentials and local
-  generated files. Publishing does not imply acceptance of W01/W02 or approval
-  to implement the roadmap.
-- Checks: scanned 74 tracked/unignored candidate files for the actual practice
-  token and private/generated paths; no matches found. Git confirmed `.env`,
-  `Requirements.md`, `.venv`, and `.uv-cache` are ignored. Whitespace check passed.
-- Status: **Blocked**. The session cannot write `.git`; creating the branch failed
-  while locking its ref. No branch or commit was created. No remote is configured.
-  The CLI cannot reach GitHub through the session's configured proxy. Its auth
-  error alone therefore does not establish whether the saved token is invalid.
-  The connected plugin identifies the account but has no repository-creation tool.
-- Next action: run the prepared Git/GitHub commands from an ordinary user terminal,
-  or resume in a session with Git metadata write access and working GitHub access.
-  Repository creation and push have not been confirmed.
+| Task | Goal | Status |
+| --- | --- | --- |
+| [W01](tasks/W01.md) | Document the workflow | Awaiting review |
+| [W02](tasks/W02.md) | Correct DECISIONS section semantics | Awaiting review |
+| [W03](tasks/W03.md) | Publish existing work on a GitHub branch | Awaiting review |
+| [W05](tasks/W05.md) | Document comment and docstring principles | Done |
+| [W06](tasks/W06.md) | Separate the plan from task records | Done |
+| [W07](tasks/W07.md) | Require a separate branch and PR for each new task | Done |
+| [T01](tasks/T01.md) | Check environment availability | Done |
+| [T02](tasks/T02.md) | Install pinned dependencies and verify the starter | Done |
 
 ## Approval and review loop
 
 1. Prepare a small task proposal using context inspection within authorized scope.
+   Include its branch name, base `main`, commit scope/message, and PR target `main`.
 2. Present it in Vietnamese using the fields below. Keep maintained docs in English.
 3. Wait for approval of the specific task scope and technical decisions.
-4. Implement that scope and run agreed checks. Pause dependent work if new
-   decisions arise; present their rationale before making them.
-5. Explain what changed, code locations, one input-to-output walkthrough, actual
+4. For each new task after W07, inspect the working tree and agree on handling
+   any unrelated changes. After approval, create and switch to a new branch from
+   up-to-date `main` before editing. Use `<type>/<task-id>-<slug>`. Implement the
+   approved scope and run agreed checks. Pause dependent work if new decisions
+   arise; present their rationale before making them.
+5. After implementation and checks, commit the approved scope/message, push the
+   task branch, and open a PR targeting `main`. Obtain approval for any Git action
+   missing from the task proposal. Record the branch, commit, and PR URL.
+6. Explain what changed, code locations, one input-to-output walkthrough, actual
    check results/limitations, and points needing candidate review.
-6. Mark `Awaiting review`. Answer questions and revise as agreed. Mark `Done`
-   only when the candidate accepts; obtain approval for the next task.
+7. Mark the task record and index `Awaiting review`. Answer questions and revise
+   as agreed. Mark `Done` only when the candidate accepts; obtain approval for
+   the next task.
+8. Merge a PR only with separate explicit approval. Creating a PR or accepting
+   a task does not authorize merging; merging alone does not accept the task.
+
+W07 records this workflow on the existing branch. The user separately approved
+publishing the earlier documentation on `feat/sla-report`; see the
+[publication checkpoint](tasks/W07.md#approved-publication-checkpoint-for-existing-work).
+This exception does not approve a future task branch, PR, or merge.
 
 The goal is behavior the candidate can explain in an interview. Do not claim
 understanding on the candidate's behalf or turn review into a memorization test.
 
 ## Task proposal and completion record
 
-Create one compact record when a task is proposed. Do not pre-fill speculative
-technical decisions for the whole roadmap.
+Keep a concrete proposal here while it awaits execution. Once work has been
+performed, move its detailed record to `tasks/<ID>.md` and retain a linked status
+summary in the task index. Update the record and index together on review or
+acceptance. Do not pre-fill speculative technical decisions for the whole roadmap.
 
 | Field | What to record |
 | --- | --- |
 | ID and goal | One behavior or tightly related unit of work |
 | Dependencies | Prior tasks or unresolved conditions |
 | Scope | Expected files, included work, and important boundaries |
+| Git delivery | Approved branch/base, commit scope/message, PR target `main`; actual branch, commit, PR URL, and separate merge approval |
 | Decisions | Proposed choice, reason, relevant alternative, and cost/limitation; approval tracked separately |
 | Acceptance | Observable results the candidate can review |
 | Verification | Meaningful examples/checks and their scope |
@@ -101,10 +82,10 @@ expansion. Approval of this document is not blanket implementation approval.
 
 ## Draft roadmap
 
-All tasks below are **Draft**. Technical decisions and execution approval are
-pending. Criteria come from the supplied specification; implementation approaches
-remain to be proposed. Explain proposed regrouping and split further if the diff
-would be difficult to review.
+T01 and T02 are accepted; their execution records are linked
+in the task index. T03–T22 remain **Draft**; technical decisions and execution
+approval are pending. Criteria come from the supplied specification. Explain
+proposed regrouping and split further if the diff would be difficult to review.
 
 ### Preparation
 
@@ -166,9 +147,11 @@ commits, and demo preparation in estimates. Actual time used has not been measur
 Reassess the budget at checkpoints; propose scope reductions and document
 unfinished work honestly.
 
-W03 publication is blocked pending normal Git/GitHub access. W01 and W02 remain
-awaiting user acceptance. The next suggested implementation proposal remains
-T01: inspect current environment
-availability and report evidence. Starting Docker, installing dependencies,
-changing versions, calling the practice API, and editing application code require
-an approved scope and rationale; this roadmap alone does not authorize them.
+W05, W06, W07, T01, and T02 are accepted. W01/W02/W03 still lack recorded explicit
+acceptance. The user confirmed publishing the existing documentation on
+`feat/sla-report` with `docs: organize task records and review workflow`.
+Verify that delivery using Git refs and a clean working tree before proposing
+T03 with its branch/commit/PR plan and a bounded practice API request budget; explain
+that upstream data starts changing five minutes after the first call. Later
+tasks, service replacement, application changes, API requests, and commits need
+approval of their specific scope; this roadmap does not authorize them.

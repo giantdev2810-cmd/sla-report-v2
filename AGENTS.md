@@ -3,7 +3,7 @@
 ## User-controlled workflow
 
 The candidate wants to understand and control generated code. Follow the approval
-and review process in `docs/PLAN.md`:
+and review process in `docs/plan/PLAN.md`:
 
 - Before changes, present the task ID, intended behavior, expected files,
   technical decisions with reasons and relevant alternatives/costs, verification,
@@ -25,19 +25,52 @@ and review process in `docs/PLAN.md`:
   does not establish that the candidate understands the code. Answer questions
   and revise as agreed; obtain approval for any new technical choices. Completion
   does not approve the next task.
-- Record the approved scope/decisions and acceptance in PLAN with a brief reference
-  to the user's message. Do not invent approval; clarify ambiguous approval before
-  dependent implementation.
+- Record approved scope/decisions and acceptance in the proposal or task record,
+  with a brief reference to the user's message. Keep the PLAN status index in sync.
+  Do not invent approval; clarify ambiguous approval before dependent implementation.
 - Present commit scope and message for approval too. The assignment's minimum
   commit count does not authorize automatically committing existing work.
+
+## Task branches and pull requests
+
+This rule applies to new tasks after W07. W07 itself is an approved documentation
+update on the existing branch; earlier unfinished work needs its own approved
+handling plan.
+
+- Include the branch name, base `main`, commit scope/message, and pull request
+  target `main` in each task proposal. Obtain approval for any Git action that
+  was not included in the approved proposal.
+- After approval and before editing files, create and switch to a new branch
+  from an up-to-date `main`. Use `<type>/<task-id>-<slug>` so the branch identifies
+  its task. Each new task gets its own branch.
+- Inspect the working tree first. If it contains changes outside the task,
+  preserve them and agree on their handling before creating the task branch.
+- Once implementation and agreed checks are complete, commit only the approved
+  scope using the approved message, push the task branch, and open a pull request
+  targeting `main`. Record the branch, commit, and PR URL in the task record.
+- Keep the task `Awaiting review` until the candidate explicitly accepts it.
+  Creating a PR does not authorize merging it; merge requires separate explicit
+  approval. A merge does not establish candidate acceptance by itself.
+
+## Comments and docstrings
+
+- Explain why, especially business rules, edge cases, and trade-offs that are not
+  obvious from the code.
+- Avoid restating what the code already makes clear.
+- Use function/module docstrings when needed to clarify purpose, inputs, outputs,
+  or conditions of use.
+- Keep comments concise, accurate, and updated alongside code.
+- Write comments and docstrings in English for consistency with reviewer-facing
+  documentation.
 
 ## Start or resume a session
 
 Before coding, including after a handoff or context loss:
 
-1. Read the latest user request, `docs/PLAN.md`, and `docs/STATE.md` to identify
-   approved scope, review status, incomplete work, and uncertainties. Reconcile
-   approvals with actual user messages; a STATE next step does not expand scope.
+1. Read the latest user request, `docs/plan/PLAN.md`, the relevant record in
+   `docs/plan/tasks/`, and `docs/STATE.md` to identify approved scope, review status,
+   incomplete work, and uncertainties. Reconcile approvals with actual user
+   messages; a STATE next step does not expand scope.
 2. Inspect `git status --short --branch`, relevant diffs, and recent commits.
    Preserve existing work; do not treat an untracked file as disposable.
 3. Read `docs/rules.md`, `docs/contract.md`, and `docs/api.md` once in the new
@@ -59,7 +92,8 @@ environment failure still occurs or that a previous check covers later changes.
 | `docs/contract.md` | Required endpoints, validation, grading, and performance targets |
 | `docs/api.md` | Documented upstream API behavior |
 | `docs/development.md` | Setup, run/test commands, and environment troubleshooting |
-| `docs/PLAN.md` | Reviewable tasks, criteria, approved decisions, and user review status |
+| `docs/plan/PLAN.md` | Approval process, roadmap, linked task status index, and next step |
+| `docs/plan/tasks/*.md` | Performed-task scope, decisions, approval evidence, checks, and review/acceptance |
 | `docs/STATE.md` | Current implementation state, evidence, blockers, and next action |
 | `docs/architecture.md` (when created) | Chosen design, module responsibilities, storage, and data flow |
 | `DECISIONS.md` | Reviewer-facing rationale, observed API findings, AI use, and trade-offs |
@@ -92,10 +126,14 @@ budget; keep documentation proportionate to that budget.
 
 ## Finish a checkpoint
 
-- Update the task's evidence and approval/review status in `docs/PLAN.md`.
-  Keep implementation complete but unaccepted work `Awaiting review`.
+- Keep detailed evidence and approval/review status in the task record under
+  `docs/plan/tasks/`; update the linked status index in `docs/plan/PLAN.md`. Move
+  performed-task details out of PLAN at the checkpoint. Keep implementation
+  complete but unaccepted work `Awaiting review`.
 - Run checks appropriate to the change. Record actual outcomes and their limits;
   syntax checks and health checks do not establish report correctness.
+- For new tasks covered by the branch/PR rule, complete the approved Git delivery
+  steps and include the PR URL in the handoff. Keep merge approval separate.
 - Update `docs/STATE.md` after a meaningful checkpoint or before handing off
   unfinished work. Keep current facts, the scope of validation, unresolved points,
   relevant files, and a concrete next step. Replace resolved blockers; do not turn
