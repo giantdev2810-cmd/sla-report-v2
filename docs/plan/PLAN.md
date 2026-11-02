@@ -30,6 +30,7 @@ validation snapshot; it does not grant permission to start another task.
 | [T03A](tasks/T03A.md) | API data audit tool | Approved — deferred by user |
 | [T04](tasks/T04.md) | Choose initial data flow and module boundaries | Done |
 | [T05](tasks/T05.md) | Exclude reverting and reverted events | Done |
+| [M01 planning](tasks/M01.md#planning-checkpoint) | Group level 1 work into an MVP | Done |
 
 ## Approval and review loop
 
@@ -107,16 +108,62 @@ first documentation proposal was approved by "ừ". The revised design and revie
 gate were approved by the later "duyệt". The user then reported "đã review" and
 explicitly accepted with "chấp nhận"; T04 is Done.
 T05's pure rule-2 helper was approved by "duyệt t05" and explicitly accepted
-with "chấp nhận t05"; it is Done;
-see its task record for the chain assumption and checks. T06–T22, including
-inserted T10A–T10D, remain **Draft**; their implementation choices and execution
-approval are pending. The user approved
+with "chấp nhận t05"; it is Done. See its task record for the chain assumption
+and checks. The user subsequently approved grouping the remaining work into
+M01–M04 with "duyệt, nhưng qua nhánh mới để làm". This approves the four-file
+planning update, not MVP implementation. The user then replied "duyệt" to the
+checked planning handoff, accepting that result. Planning is Done; M01 application
+implementation was subsequently approved with "duyệt" and is In progress.
+Legacy T06–T22 and T10A–T10D are retained as checklist IDs, not separately
+approved implementation tasks. The user approved
 W09's roadmap revision with "duyệt", then accepted the reviewed result with
 "đã chấp nhận review"; W09 is Done. Acceptance does not approve the application
 tasks described by the revised roadmap. T03A is deferred
 by the user and is not a prerequisite for the application tasks below.
 Criteria come from the supplied specification. Explain
 proposed regrouping and split further if the diff would be difficult to review.
+
+### Grouped delivery roadmap
+
+| Package | Scope | State |
+| --- | --- | --- |
+| [M01](tasks/M01.md) | Level 1 report MVP: T06–T13 plus T10A–T10D; reuse accepted T05 | Planning accepted; implementation In progress |
+| M02 | Six-month coverage, readiness and performance: T14–T15 | Draft |
+| M03 | Live updates and recovery: T16 | Draft |
+| M04 | Browse filters, sorting, cursors and UI: T17–T19 | Draft |
+
+T20–T22 remain the delivery checklist after level-specific verification. T03A
+stays deferred and is not a prerequisite for M01. Completed task history is not
+renumbered or reclassified by this grouping.
+
+M01 will be one implementation task, with one approved overall proposal, one
+implementation branch and one final candidate review/PR. Its existing checklist
+IDs do not each need a branch, implementation approval or PR. The overall proposal
+must bundle foreseeable technical choices, files, error policies, API budget,
+verification, Git scope/message and estimate including review. Grouping alone
+does not approve those choices or authorize code or API calls. New decisions or
+scope changes still need approval before dependent work.
+
+| M01 checkpoint | Checklist | Observable outcome |
+| --- | --- | --- |
+| 1. Correct calculations | T06–T10; reuse T05 | All seven rules and responder aggregation checked against explicit synthetic expectations |
+| 2. Real data integration | T10A–T10D | Store/snapshot, reference data, request pages and full required event histories connected to calculations |
+| 3. Runnable application | T11–T13 | HTTP validation/output, UI, Docker run and source-to-report checks for October and 12–18 October |
+
+Report progress and evidence at each checkpoint without requiring separate
+acceptance/PR for each internal checklist item. Only the completed M01 is handed
+off for final review and explicit acceptance before its approved commit/push/PR.
+An internal checkpoint or passing tests does not establish MVP completion.
+
+M01 acceptance requires a Docker-runnable page with date input, real upstream
+data, contract-shaped request rows and responder totals, and seven-rule checks.
+Missing/invalid/reversed dates must return 400; loading failures or unusable data
+must be visible rather than silently presented as a complete report. Detailed
+error policies and acquisition completeness checks still need proposal approval.
+Fixtures establish rule behavior but do not substitute for real-data integration.
+Do not claim complete coverage solely from deduplication or matching upstream totals.
+`/ready` must remain 503 unless the contract's usable six-month condition is met;
+M01 alone does not claim M02's readiness/performance or M03/M04 behavior.
 
 ### Preparation
 
@@ -127,7 +174,7 @@ proposed regrouping and split further if the diff would be difficult to review.
 | T03 | Inspect the practice API with an agreed request scope | Sanitized representative data and pagination observations; first-call data-change timer explained before access; future inspections retain local raw bodies/output per W08 |
 | T04 | Choose initial data flow and module boundaries | User approves responsibilities, data access, storage if any, and costs; record chosen design in architecture.md |
 
-### Level 1: correct report
+### M01 checklist: level 1 report MVP
 
 | ID | Small unit of work | Acceptance / review focus |
 | --- | --- | --- |
@@ -151,14 +198,15 @@ level 1. T11 depends on that report data path, followed by T12 and T13. T13 must
 trace actual acquisition through the HTTP report, not only fixtures; record results
 for October and 12–18 October and their limits. Level 1 acquisition does not imply
 six-month readiness or performance. Fixtures, interfaces, libraries, file layout,
-checks, and any live access must be separately proposed and approved per task.
+checks, error policies and live access must be included in the grouped M01
+implementation proposal; unapproved new choices still pause dependent work.
 
 The accepted architecture defines module responsibilities. These draft steps
-organize implementation without selecting unresolved ingestion policies or changing
-the business rules. T05–T22 retain their identifiers; inserted steps do not rename
-performed work. See the dependency and open-question gates below.
+organize implementation inside M01 without selecting unresolved ingestion policies
+or changing business rules. Legacy IDs identify checklist coverage, not separate
+branches/PRs. See the dependency and open-question gates below.
 
-### Levels 2–4, in grading order
+### M02–M04 checklist: levels 2–4, in grading order
 
 | ID | Small unit of work | Acceptance / review focus |
 | --- | --- | --- |
@@ -169,22 +217,24 @@ performed work. See the dependency and open-question gates below.
 | T18 | Add cursor pagination | Approved cursor strategy; invalid cursors rejected and continuously matching rows appear exactly once during changes |
 | T19 | Add page browsing controls | Candidate can use filters/sorting/paging and explain their endpoint interaction |
 
-These later tasks are outlines. Split T14, T16, and T18 further once observations
-and design make their scope concrete. Do not start a later level automatically.
+These packages are outlines; use T14–T19 to trace their scope. Split internal
+checkpoints further when needed for review, within an approved grouped proposal.
+Do not start a later package or level automatically.
 
 ### Dependencies and open-question gates
 
 ```text
-T05-T10: pure rules and report fixtures
+M01 (reuse T05): T06-T10 pure rules and report fixtures
   -> T10A: store/snapshot -> T10B: references -> T10C: requests
   -> T10D: full events + report integration -> T11 -> T12 -> T13
-  -> T14: six-month expansion -> T15: readiness/performance
-  -> T16: updates/recovery -> T17 -> T18 -> T19
+  -> M02: T14 six-month expansion -> T15 readiness/performance
+  -> M03: T16 updates/recovery -> M04: T17 -> T18 -> T19
 ```
 
-The questions below remain open by user instruction. Their assigned tasks must
-present and obtain approval for a policy before implementing dependent behavior.
-A task may perform only its approved independent work while a question is open;
+The questions below remain open by user instruction. Their assigned checklist IDs
+identify where the grouped package proposal must obtain approval for a policy
+before implementing dependent behavior. A package may perform only its approved
+independent work while a question is open;
 neither this table nor roadmap approval resolves it or authorizes API calls.
 
 | Open question | Proposal/checkpoint responsible |
@@ -291,3 +341,22 @@ is Done; its approved seven-file commit/push/PR may now proceed. Starter deletio
 remain outside this task's delivery; merge still needs separate approval.
 The branch is based on main 124e14a (PR #10 observed merged). T03A stays deferred;
 T06 and later tasks need separate proposals.
+
+The user then requested a runnable, correct MVP before further expansion and
+approved grouping with "duyệt, nhưng qua nhánh mới để làm". On
+docs/m01-mvp-plan from updated main 93d77fe, update this plan, architecture's
+scheduling note, STATE and [M01](tasks/M01.md) only. The user subsequently replied
+"duyệt" to the checked planning result; planning is accepted and Done. M01's
+concrete implementation proposal is now presented for approval, not implemented.
+T05 delivery bookkeeping is preserved in a named stash and the user's 46 starter
+deletions remain untouched/outside scope. No code, live API run or publication is
+authorized by this planning approval.
+
+The concrete M01 implementation proposal was subsequently approved with "duyệt".
+Code, offline/Docker tests and the single authorized live session are in progress;
+final acceptance and publication remain pending. The user will check the UI manually.
+
+The user subsequently requested "đẩy lên remote đi", authorizing the current M01
+checkpoint commit/push on docs/m01-mvp-plan before final acceptance, using the
+approved message. M01 remains In progress; PR/merge and new agent live traffic
+are not authorized by that publication request. User starter deletions stay out.

@@ -7,6 +7,8 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 <!-- Anything the brief did not say that you had to decide. -->
 - I assume the Reviewers are both human and agents
 - I assume reverting a reversal does not restore an earlier event. If B reverts A and C reverts B, all three are excluded under rule 2.
+- For equal event timestamps, I use event ID as the tie-breaker: the lowest ID is earliest and the highest is latest. The brief does not specify a tie-breaker.
+- An overnight work window belongs to its opening weekday; each local calendar day's holiday excludes that portion of the window. Overlapping work windows are unioned rather than counted twice.
 
 ## What I found in the API or data
 
@@ -28,6 +30,8 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 - Codex initially proposed feed-only bootstrap without established historical coverage. After the candidate confirmed that history is incomplete, Codex revised the approved T04 design to request/event baseline loading and feed updates, leaving other questions explicitly open. The local `write-decisions` skill guided separating candidate-reported facts, bounded capture evidence, and design choices. The candidate also requested PR creation only after review and acceptance; this architecture is not an implemented or tested report.
 - Codex implemented the pure rule-2 filter and synthetic tests after candidate approval, including the agreed non-restoring reversal chain. Ten rule cases and the existing health test passed; these checks cover the helper's behavior, not live data completeness or the remaining SLA rules. The local `write-decisions` skill guided recording the interpretation as an assumption rather than an API finding.
 
+- Codex implemented the approved grouped MVP with pure rules, report aggregation, bounded acquisition, atomic copied snapshots, endpoint/UI and private capture, then generated mock/expected-value tests. The final suite passed 53 tests locally and in Docker. The first root-directory invocation failed imports and was corrected to run from app/. Live acquisition failed after three transport errors, so generated code and passing mock tests are not claimed as real-data report validation.
+
 ## Trade-offs and what I would do next
 
 <!-- What you left out to stay within 3 hours, and what you would do with more time. -->
@@ -35,3 +39,6 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 - A bounded sample with private raw capture permits detailed offline investigation without spending further API calls. It does not prove full coverage, and raw files are unavailable to public-repository reviewers; the task record provides sanitized evidence while the source bodies remain on the local machine.
 - The approved revision replaces feed-only bootstrap with request pages plus full per-request event histories, using the feed for updates. This avoids depending on the feed for initial history at greater HTTP cost; acquisition completeness, bootstrap/feed coordination, rate limits, and conflict policies remain open rather than implemented guarantees.
 - The initial design selects one worker with process-local memory rather than SQLite to limit database work within the time budget. Restart requires a full reload, multiple workers would have separate stores, and consistent read snapshots add memory/copying cost. Pure SLA calculations separate rule verification from network and storage behavior; these modules are not implemented yet.
+
+- M01 uses three full request walks and sequential bounded HTTP to detect observed inconsistencies before publication, at substantial first-load cost. Stable walks cannot prove that the upstream omitted nothing, and no automatic refresh is provided; snapshots remain cached for subranges until another load or restart.
+- Ambiguous/nonexistent local wall times fail rather than silently selecting a DST offset. The bounded live acquisition encountered transport failure before publishing a report; real-data verification and user UI review remain required before MVP acceptance.
