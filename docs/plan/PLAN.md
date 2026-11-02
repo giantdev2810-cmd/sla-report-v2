@@ -23,6 +23,7 @@ validation snapshot; it does not grant permission to start another task.
 | [W07](tasks/W07.md) | Require a separate branch and PR for each new task | Done |
 | [T01](tasks/T01.md) | Check environment availability | Done |
 | [T02](tasks/T02.md) | Install pinned dependencies and verify the starter | Done |
+| [T03](tasks/T03.md) | Inspect a bounded practice API sample | Awaiting review |
 
 ## Approval and review loop
 
@@ -82,8 +83,8 @@ expansion. Approval of this document is not blanket implementation approval.
 
 ## Draft roadmap
 
-T01 and T02 are accepted; their execution records are linked
-in the task index. T03–T22 remain **Draft**; technical decisions and execution
+T01 and T02 are accepted; T03 is Awaiting review. Their execution records are linked
+in the task index. T04–T22 remain **Draft**; technical decisions and execution
 approval are pending. Criteria come from the supplied specification. Explain
 proposed regrouping and split further if the diff would be difficult to review.
 
@@ -148,10 +149,13 @@ Reassess the budget at checkpoints; propose scope reductions and document
 unfinished work honestly.
 
 W05, W06, W07, T01, and T02 are accepted. W01/W02/W03 still lack recorded explicit
-acceptance. The user confirmed publishing the existing documentation on
-`feat/sla-report` with `docs: organize task records and review workflow`.
-Verify that delivery using Git refs and a clean working tree before proposing
-T03 with its branch/commit/PR plan and a bounded practice API request budget; explain
-that upstream data starts changing five minutes after the first call. Later
-tasks, service replacement, application changes, API requests, and commits need
-approval of their specific scope; this roadmap does not authorize them.
+acceptance. The earlier documentation was published as `7d84cb1` and merged in
+PR #2; local main was fast-forwarded to `857bd68` before creating the T03 branch.
+
+T03 was approved by the user's "duyệt" following its concrete proposal. It completed
+an 11-GET sample and is Awaiting review; see its task record for evidence, limits,
+and Git delivery. No further live request is authorized by that completed budget.
+Obtain candidate acceptance of T03 and separate PR merge approval, then propose
+T04's data flow and module boundaries with the observed pagination uncertainties.
+Later tasks, service replacement, application changes, and Git actions outside an
+approved proposal require their own approval; this roadmap does not authorize them.
