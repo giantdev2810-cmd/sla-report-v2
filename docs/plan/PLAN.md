@@ -25,7 +25,7 @@ validation snapshot; it does not grant permission to start another task.
 | [T01](tasks/T01.md) | Check environment availability | Done |
 | [T02](tasks/T02.md) | Install pinned dependencies and verify the starter | Done |
 | [T03 attempt 1](tasks/T03-attempt-1.md) | Inspect a bounded practice API sample (canceled first attempt) | Canceled |
-| [T03 attempt 2](tasks/T03.md) | Restart inspection with private raw capture | Awaiting review |
+| [T03 attempt 2](tasks/T03.md) | Restart inspection with private raw capture | Done |
 
 ## Approval and review loop
 
@@ -89,7 +89,7 @@ expansion. Approval of this document is not blanket implementation approval.
 
 T01 and T02 are accepted. The user canceled T03's first attempt; PR #3 is closed,
 and its branch/history are retained. The user approved the concrete T03 restart
-proposal with raw-output capture; attempt 2 is Awaiting review. T04–T22 remain
+proposal with raw-output capture; attempt 2 is explicitly accepted and Done. T04–T22 remain
 **Draft**; technical decisions
 and execution approval are pending. Criteria come from the supplied specification. Explain
 proposed regrouping and split further if the diff would be difficult to review.
@@ -154,7 +154,7 @@ commits, and demo preparation in estimates. Actual time used has not been measur
 Reassess the budget at checkpoints; propose scope reductions and document
 unfinished work honestly.
 
-W05, W06, W07, W08, T01, and T02 are accepted. W01/W02/W03 still lack recorded explicit
+W05, W06, W07, W08, T01, T02, and T03 attempt 2 are accepted. W01/W02/W03 still lack recorded explicit
 acceptance. The earlier documentation was published as `7d84cb1` and merged into
 main at `857bd68`. The user then requested "hủy T03 và bắt đầu T03 lại".
 T03 attempt 1 is Canceled; PR #3 was closed without deleting its branch or commits.
@@ -173,5 +173,11 @@ authorized. T04 still needs its own proposal after candidate review.
 
 Attempt 2 completed one 11-GET run with 11 raw bodies, request metadata, and
 sanitized output retained locally. Its request budget is consumed; do not rerun
-the script for context or validation. Obtain explicit candidate acceptance and
-separate PR merge approval before treating the task as complete or integrating it.
+the script for context or validation. PR #5 was subsequently observed merged.
+The user requested recording the
+offline review findings; see the task record for confirmed repeated feed sequences,
+payload timing, and coverage limits, then explicitly requested "đẩy lên và chốt t03".
+T03 attempt 2 is Done. Publish the four-file records with the already approved
+commit message on its task branch, push, and open a follow-up PR into main;
+merge remains separate. See the task record for delivery evidence. T04 needs its
+own concrete proposal and approval; no ingestion design has been selected.

@@ -11,8 +11,9 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 
 <!-- Anything that did not match the docs, or surprised you, and how you handled it. -->
 
-- The replacement T03 sample on 2026-11-02 returned 100 distinct IDs on each of two request pages, with one ID shared between pages and identical payloads for that ID. Both responses reported `total=11999`, `per_page=100`, and `total_pages=122`, while `ceil(total/per_page)=120`. The capture preserves this discrepancy for offline review; its cause and full-traversal behavior remain unresolved before ingestion design in T04.
-- The selected request had only one event (a null actor and a local deadline string), so it did not establish reversal handling, meaningful event ordering, or event pagination. Two five-row change-feed pages accepted cursor continuation with ascending sequences within each page; expiry, duplicate delivery, and current-payload semantics remain unverified.
+- The replacement T03 sample on 2026-11-02 returned 100 distinct IDs on each of two request pages; page 1's last request reappeared first on page 2 with the same payload. Both reported `total=11999`, `per_page=100`, and `total_pages=122`, while `ceil(total/per_page)=120`. The cause and full-traversal completeness remain unresolved; removing duplicates alone would not establish that no requests were missed.
+- Offline review of the two saved change-feed pages found ten rows but only eight distinct `seq` values: page 1's last two rows reappeared first on page 2 with identical payloads. All five request-payload occurrences had `updated_at` later than the change's `at`, supporting the documented current-payload behavior rather than event-time snapshots. The sample does not establish general freshness, cursor expiry, or staff-change handling.
+- The request sample covers 30 October through 2 November in UTC, not the graded 12-18 October range. The selected request had one pending event with a null actor, so first response, reversals, completion/reopening, meaningful event ordering, and event pagination remain unexercised; only two of three sites' holiday lists were sampled.
 
 ## How I used AI
 
@@ -21,7 +22,7 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 - Used Codex to read the brief and starter documentation, configure the development environment, and document verification results.
 - Used Codex to create a local `write-decisions` skill and repository context instructions. `docs/STATE.md` separates inspected implementation from historical test results so a later session can resume without treating unverified work as complete.
 - Agreed with Codex on a candidate-controlled workflow: each small task and its technical decisions require approval before implementation, followed by a code walkthrough and candidate review. `docs/plan/PLAN.md` records scope and approval separately from implementation and verification so generated code remains reviewable.
-- Codex adapted the canceled inspection script to retain local raw bodies and generated offline tests for byte preservation, request limits, safe output, and failure handling. Eleven tests passed before the replacement live run; Codex then reconciled eleven saved bodies with metadata/output and used the local `write-decisions` skill to document the supported findings. These checks do not establish SLA correctness.
+- Codex adapted the canceled inspection script to retain local raw bodies and generated offline tests for byte preservation, request limits, safe output, and failure handling. Eleven tests passed before the replacement live run; Codex reconciled eleven saved bodies with metadata/output, then identified repeated feed sequences and post-change payload timestamps through offline review. The local `write-decisions` skill guided these evidence-based notes; capture checks do not establish SLA correctness.
 
 ## Trade-offs and what I would do next
 
