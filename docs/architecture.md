@@ -1,15 +1,33 @@
 # Initial SLA architecture
 
-T04 design approved by the user's "ừ" after its concrete proposal. This is a
-chosen direction, not implemented application behavior. T04 is documentation only
-and Awaiting review. No ingestion, store, SLA calculation, or refresh exists yet.
+Revised T04 design approved by the user's "duyệt" after the proposal combining
+request/event acquisition and the PR-after-review workflow. This describes the
+chosen direction, not implemented behavior. The candidate reported "đã review"
+and explicitly accepted with "chấp nhận"; T04 is Done as a documentation task.
+Ingestion, storage, SLA calculation, and refresh are not implemented.
+
+## Sources and evidence
+
+The candidate confirms that the feed does not contain the full history. Therefore
+the original feed-only bootstrap is superseded. Load baseline requests from
+`/v1/requests` and complete event pages from `/v1/requests/{id}/events` for each
+request needed for calculation. Use the feed to update the local copy rather
+than reconstruct all initial history. This replacement has higher HTTP cost.
+
+Offline review of `.local/inspect/T03/20261102T093325641343Z/` found only two
+change pages: ten rows, eight distinct seq values (1-8), four distinct request
+payload IDs, and has_more=true on both pages. Changes span 30 April 2026 UTC;
+the two request-list pages contain 199 distinct IDs and report total=11999.
+The capture is not a completed traversal, so these counts do not independently
+prove that the feed omits history. Full-history insufficiency is user-reported;
+the retention window and precise missing-history mechanism remain unspecified.
 
 ## Data flow
 
 ```text
-Helpdesk API: sites / all site holidays / current staff / changes from the start
+Helpdesk API: requests + full event pages + sites/holidays/current staff
                                   |
-                              helpdesk
+                              helpdesk <--- change feed (updates)
                                   |
                               ingestion
                                   |
@@ -17,21 +35,20 @@ Helpdesk API: sites / all site holidays / current staff / changes from the start
                                   |
                          consistent snapshot
                                   |
-HTTP dates --> main --> report --> sla --> contract rows + summary --> main JSON
+HTTP dates --> main --> report --> pure SLA rules --> rows + summary --> main JSON
 ```
 
-- Bootstrap requests and events from `/v1/changes` without a cursor; load sites,
-  every site's holidays, and current staff separately. Reports use the local copy
-  rather than make HTTP calls per row. Later refresh uses the same ingestion boundary.
-- Follow `next_cursor` until `has_more` is false. Repeated delivery is expected;
-  neither page length nor an assumed sequence step proves completion.
-- The API documents every change since the start. T03's two-page sample did not
-  establish complete history, event coverage, or the graded date ranges. Verify
-  these during integration before claiming usable coverage. If insufficient,
-  propose a revised acquisition plan before implementing a fallback.
-- The alternative, request pages plus per-request events, needs many calls and
-  has unresolved pagination completeness given T03's overlap/count discrepancy.
-  It is not the chosen primary acquisition path.
+- Ingestion acquires request pages and full event history for requests needed by
+  the report, plus sites, every site's holidays, and current staff. The acquisition
+  range and use of upstream date filters still need their own approved details.
+- The same ingestion boundary later applies feed updates. Timing the feed against
+  baseline loading, cursor recovery, and conflict resolution remain open; no
+  before-bootstrap capture/replay algorithm is selected here.
+- Reports read the local snapshot rather than issue HTTP calls per result row.
+- Follow event `has_more` and feed `next_cursor`/`has_more` during their respective
+  traversals. A caught-up feed does not demonstrate complete baseline history.
+  Request pagination stopping and reconciliation need a separate approved strategy;
+  overlap removal or matching `total` alone cannot establish no requests were missed.
 
 ## Module boundaries
 
@@ -41,7 +58,7 @@ Each implementation task still requires approved interfaces and checks.
 | Module | Responsibility | Boundary |
 | --- | --- | --- |
 | `helpdesk.py` | HTTP transport, environment credentials, upstream responses/errors | No SLA rules or report state ownership |
-| `ingestion.py` | Reference loading, feed traversal, update coordination, bootstrap/refresh state | No SLA arithmetic or endpoint formatting |
+| `ingestion.py` | Request/event and reference loading, feed traversal, update coordination, bootstrap/refresh state | No SLA arithmetic or endpoint formatting |
 | `store.py` | In-memory entities, duplicate/version handling, consistent snapshots | No HTTP calls or business-rule decisions |
 | `sla.py` | Pure rules from request, events, site calendar, and current staff | No network, shared mutable state, or framework dependency |
 | `report.py` | Select included requests, assemble contract rows, aggregate those rows | One snapshot per report; no upstream calls |
@@ -53,10 +70,10 @@ Each implementation task still requires approved interfaces and checks.
   holidays, and staff. Recognize repeated change delivery using `seq`; repeats
   must not add report rows or duplicate events.
 - Request payloads describe current records rather than historical state at change
-  `at`. Guard replacement using `updated_at`; arriving later or having a later
-  sequence must not let an older payload replace a newer one. Exact timestamp
-  ties/conflicts and repeated sequences with differing current payloads need
-  explicit handling in the ingestion implementation proposal.
+  `at`. Keep version information such as `updated_at` available for the later
+  update policy; arrival order and change sequence alone do not prove freshness.
+  Version conflicts, including equal timestamps or repeated sequences with
+  different payloads, remain open rather than silently resolved here.
 - Keep event history for reversals, first response, and completion/deadline rules.
   Current status and `due_on` cannot substitute for that history. Retain exclusion
   flags so later reports can omit canceled, deleted, or merged requests.
@@ -97,7 +114,21 @@ minutes; within_target and completed_late are true. The responder gains one requ
 one within-target count and one late count. Repeated feed rows add no contribution.
 Reversals must be removed before these calculations.
 
-## Readiness and deferred work
+## Open questions and readiness limits
+
+The user explicitly leaves the following unresolved. Listing them does not select
+a policy or authorize additional implementation or API inspection.
+
+| Question | Consequence / later review |
+| --- | --- |
+| Request pagination completeness while data changes | A deduplicated set may still omit requests; reconciliation strategy needs approval |
+| Baseline/feed timing and consistency | Updates must not silently leave stale or mixed data; synchronization/replay strategy is open |
+| Request volume, concurrency and rate limits | Per-request event calls may exceed the startup target; measure and propose limits/retries |
+| Version conflicts and repeated seq with differing payloads | Define update policy before implementing ingestion |
+| Events sharing the same `at` | Rules say earliest/latest but do not give a tie-breaker; do not invent one |
+| Acquisition range and upstream date-filter timezone | Report inclusion must remain site-local; upstream filtering semantics are not verified |
+| Missing references, malformed data, and recovery | Define whether/how to refetch, stop, or keep readiness false |
+| Concrete snapshot mechanics and browse cursors | A consistent report read alone does not guarantee exactly-once browsing across requests |
 
 - Intended readiness requires usable request/event and reference data for the full
   six-month range, with bootstrap caught up. A partial load is not ready; caught-up
