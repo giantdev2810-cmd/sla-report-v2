@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write DECISIONS.md"
+  short_description: "Keep SLA take-home decisions grounded in evidence"
+  default_prompt: "Use $write-decisions to update DECISIONS.md from the current implementation checkpoint and verified results."

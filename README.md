@@ -12,6 +12,10 @@ docker-compose.yml  runs your app
 .env.example        copy to .env and paste in your practice API details
 ```
 
+## Development workspace
+
+The configured application uses the Python/FastAPI starter in `app/`. See [docs/development.md](docs/development.md) for Docker and local Windows commands, credential handling, and setup verification.
+
 ## Setup
 
 You need Docker (with Compose) and Git.
@@ -19,7 +23,7 @@ You need Docker (with Compose) and Git.
 ```bash
 git init && git add -A && git commit -m "chore: start from the kit"
 cp .env.example .env                 # paste in HELPDESK_URL and HELPDESK_TOKEN
-cp -r starters/node-express app      # or starters/rails, or starters/python-fastapi
+cp -r starters/python-fastapi app   # skip if app/ already exists
 docker compose up --build            # your app on http://localhost:8080
 curl http://localhost:8080/health    # {"ok": true}
 docker compose run --rm app test     # your tests, exit 0 = pass
