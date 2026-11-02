@@ -23,6 +23,7 @@ With Python 3.12 and uv installed, run from the repository root:
 ```powershell
 uv --cache-dir .uv-cache venv --python 3.12 .venv
 uv --cache-dir .uv-cache pip install --python .venv\Scripts\python.exe -r app\requirements.txt
+uv pip check --python .venv\Scripts\python.exe
 .\scripts\dev.ps1 test
 .\scripts\dev.ps1 start
 ```
@@ -33,13 +34,17 @@ Run and test through Docker before submission even when developing locally. Depe
 
 ## Current setup verification
 
-- Git is initialized and already contains the starter commit.
-- Python 3.12.13 virtual environment created at `.venv/`.
-- Docker Compose configuration validated with `docker compose config --quiet`.
-- Git ignore rules verified for both private files.
-- Python source files compile successfully. The local helper parses and invokes Python correctly; running tests currently exits with `No module named pytest` because dependencies could not be installed.
-- Runtime tests and Docker build are pending: Docker Engine was unavailable and Docker Desktop startup reported access denied writing its host log. Dependency installation could not reach PyPI through the current network connection. The local cache does not contain all required versions.
-- No practice API calls were made during setup.
+Checked on 2026-11-02 in T01/T02:
+
+- Python in `.venv/` is `3.12.13`. uv `0.12.2` installed all six direct dependencies at the exact supplied versions, plus their transitive dependencies. `uv pip check` passed.
+- `scripts/dev.ps1 test` passed: `1 passed in 1.46s`.
+- Docker CLI and Engine `29.9.2` and Compose `v5.6.1` are available. `docker compose config --quiet` passed in T01.
+- `docker compose build app` succeeded. `docker compose run --rm --no-deps app test` tested the new image in a temporary container: `1 passed in 0.48s`.
+- The existing app container on port 8080 was preserved. GET `/health` returned HTTP 200 with `{"ok": true}`. This HTTP result applies to that existing container; the temporary-container test validates the new image.
+- Earlier dependency-download and Docker-Engine failures no longer block these commands. Private-file ignore rules were verified earlier, not rescanned in T02.
+- No practice API calls were made by the agent during setup or T01/T02. Health checks do not establish SLA report correctness or six-month readiness.
+
+When an app container is already running, the build/test commands above validate a new image without replacing that service. Applying the new image to the running service is a separate action.
 
 ## Starter behavior
 
