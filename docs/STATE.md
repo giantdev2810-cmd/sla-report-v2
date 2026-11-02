@@ -50,7 +50,9 @@ The application and dependency pins are unchanged.
   and requesting publication of the four-file records. Reuse approved message
   `chore: restart API inspection with raw capture` on the task branch, push, and
   open a follow-up PR into main. Raw/pretty files stay local. T04/API/script changes
-  and merging that follow-up PR remain outside scope. Follow-up delivery: pending.
+  and merging that follow-up PR remain outside scope. Publication commit `0c15f9a`
+  was pushed; follow-up PR [#6](https://github.com/giantdev2810-cmd/sla-report-v2/pull/6) targets main. This delivery record is
+  a checkpoint on the same branch; use live refs for the resulting tip hash.
 
 ## Current implementation and evidence
 
@@ -119,7 +121,7 @@ and not available through the public repository.
 
 ## Next action
 
-Complete the requested follow-up records delivery; T03 attempt 2 is Done and
+T03 attempt 2 and its requested records publication are complete;
 PR #5 is already merged. A follow-up PR merge needs separate approval. Prepare
 T04's concrete design proposal only when requested; it has no execution approval.
 Preserve the canceled first attempt

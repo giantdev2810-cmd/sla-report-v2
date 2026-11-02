@@ -177,7 +177,7 @@ the script for context or validation. PR #5 was subsequently observed merged.
 The user requested recording the
 offline review findings; see the task record for confirmed repeated feed sequences,
 payload timing, and coverage limits, then explicitly requested "đẩy lên và chốt t03".
-T03 attempt 2 is Done. Publish the four-file records with the already approved
-commit message on its task branch, push, and open a follow-up PR into main;
-merge remains separate. See the task record for delivery evidence. T04 needs its
+T03 attempt 2 is Done. The four-file records were committed with the approved
+message and pushed on its task branch; follow-up PR #6 targets main.
+Merge remains separate. See the task record for delivery evidence. T04 needs its
 own concrete proposal and approval; no ingestion design has been selected.
