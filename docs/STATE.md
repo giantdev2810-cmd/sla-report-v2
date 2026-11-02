@@ -76,7 +76,8 @@ commit/push of the current M01 checkpoint; PR creation remains gated on acceptan
   equality verified. The current documentation update is local/uncommitted.
   This request does not accept M01 or authorize a PR/merge. Starter deletions and
   private capture remain excluded; service/runtime is untouched by publication.
-- All 46 user-authored starter deletions remain unstaged, outside M01 scope.
+- The user's later full-publication request included all 46 starter deletions;
+  they are committed in 9e5fb54, together with notes and updated setup references.
 - Preserve stashes `preserve T05 delivery records before MVP planning`,
   `preserve T03A deferral records before returning to T04`, and
   `preserve W08 acceptance and T03 cancellation`. Do not apply old PLAN/STATE over
@@ -108,3 +109,8 @@ authorize merging, publish ignored credentials/capture, or resume API verificati
 The user supplied a 200 access log for 1 October 2026; treat that as user-reported
 HTTP success for one day, not independent full-month or SLA correctness evidence.
 Keep stashes/private evidence. Use live branch/PR refs for publication results.
+
+Full publication commit 9e5fb54 was pushed. PR
+[#12](https://github.com/giantdev2810-cmd/sla-report-v2/pull/12) targets main from
+docs/m01-mvp-plan. This delivery record is a checkpoint on the same branch;
+use live refs for its final tip. No merge or new live verification was performed.
