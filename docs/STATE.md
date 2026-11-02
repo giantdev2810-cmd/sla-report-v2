@@ -24,8 +24,10 @@ Application code and the accepted architecture decisions are unchanged.
   main 9c207c0. PR #9 was observed merged at 2026-11-02 10:44:13 UTC; the agent
   did not merge it. Working tree was clean before W09 edits.
 - W09's approved message: `docs: align roadmap with accepted SLA architecture`.
-  Publish the accepted five-file revision and create a PR into main; actual
-  commit/URL pending delivery. No delivery occurred before review acceptance.
+  Accepted revision commit 059cba7 was pushed; PR
+  [#10](https://github.com/giantdev2810-cmd/sla-report-v2/pull/10) targets main.
+  This delivery checkpoint uses the same approved message; use live refs for its
+  final tip. No delivery occurred before review acceptance; no merge was run.
 - [T03A](plan/tasks/T03A.md) is Approved — deferred by user. Its task record was
   restored byte-for-byte from stash `preserve T03A deferral records before returning
   to T04`; old PLAN/STATE files were not applied. The stash remains as backup.
@@ -62,7 +64,7 @@ Application code and the accepted architecture decisions are unchanged.
 
 ## Next action
 
-Publish accepted W09 through its approved commit/push/new PR and record delivery.
-Merge needs separate approval. T03A stays deferred; T05 and each later task need
+W09's accepted revision and approved Git delivery are complete. PR #10 merge
+needs separate approval. T03A stays deferred; T05 and each later task need
 their own proposals.
 Actual total time against the assignment's three-hour budget has not been measured.

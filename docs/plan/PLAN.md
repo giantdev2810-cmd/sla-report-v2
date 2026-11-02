@@ -273,5 +273,7 @@ with "duyệt" after the concrete five-file proposal: insert T10A–T10D, narrow
 assign open-question gates, align the architecture's scheduling note, and restore
 the T03A record without dropping its stash. See [W09](tasks/W09.md) for review
 evidence. The user then explicitly accepted the reviewed work with
-"đã chấp nhận review". W09 is Done and its approved commit/push/PR may now proceed;
-merge needs separate approval. T03A stays deferred and T05 needs its own proposal.
+"đã chấp nhận review". W09 is Done; accepted revision 059cba7 was pushed and
+[PR #10](https://github.com/giantdev2810-cmd/sla-report-v2/pull/10) opened into main
+after acceptance. Merge needs separate approval. T03A stays deferred and T05
+needs its own proposal.
