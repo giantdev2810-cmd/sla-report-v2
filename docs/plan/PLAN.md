@@ -21,10 +21,11 @@ validation snapshot; it does not grant permission to start another task.
 | [W05](tasks/W05.md) | Document comment and docstring principles | Done |
 | [W06](tasks/W06.md) | Separate the plan from task records | Done |
 | [W07](tasks/W07.md) | Require a separate branch and PR for each new task | Done |
-| [W08](tasks/W08.md) | Require local raw API inspection evidence | Awaiting review |
+| [W08](tasks/W08.md) | Require local raw API inspection evidence | Done |
 | [T01](tasks/T01.md) | Check environment availability | Done |
 | [T02](tasks/T02.md) | Install pinned dependencies and verify the starter | Done |
-| [T03](https://github.com/giantdev2810-cmd/sla-report-v2/pull/3) | Inspect a bounded practice API sample (separate PR) | Awaiting review |
+| [T03 attempt 1](tasks/T03-attempt-1.md) | Inspect a bounded practice API sample (canceled first attempt) | Canceled |
+| [T03 attempt 2](tasks/T03.md) | Restart inspection with private raw capture | Awaiting review |
 
 ## Approval and review loop
 
@@ -79,14 +80,17 @@ acceptance. Do not pre-fill speculative technical decisions for the whole roadma
 | Review | Questions, revisions, and explicit user acceptance, or pending |
 
 Statuses: `Draft` (outline), `Proposed` (concrete scope awaiting approval),
-`Approved`, `In progress`, `Awaiting review`, `Done` (user accepted), and `Blocked`
+`Approved`, `In progress`, `Awaiting review`, `Done` (user accepted), `Canceled`
+(explicitly canceled by the user), and `Blocked`
 (a named dependency prevents progress). A failed check does not authorize a scope
 expansion. Approval of this document is not blanket implementation approval.
 
 ## Draft roadmap
 
-T01 and T02 are accepted; T03 is Awaiting review in separate PR #3, whose files are
-not part of W08's main-based branch. T04–T22 remain **Draft**; technical decisions
+T01 and T02 are accepted. The user canceled T03's first attempt; PR #3 is closed,
+and its branch/history are retained. The user approved the concrete T03 restart
+proposal with raw-output capture; attempt 2 is Awaiting review. T04–T22 remain
+**Draft**; technical decisions
 and execution approval are pending. Criteria come from the supplied specification. Explain
 proposed regrouping and split further if the diff would be difficult to review.
 
@@ -150,14 +154,24 @@ commits, and demo preparation in estimates. Actual time used has not been measur
 Reassess the budget at checkpoints; propose scope reductions and document
 unfinished work honestly.
 
-W05, W06, W07, T01, and T02 are accepted. W01/W02/W03 still lack recorded explicit
+W05, W06, W07, W08, T01, and T02 are accepted. W01/W02/W03 still lack recorded explicit
 acceptance. The earlier documentation was published as `7d84cb1` and merged into
-main at `857bd68`. T03's implementation/evidence and task record are on its own
-branch in PR #3; T03 is Awaiting review. No merge is authorized by W08.
+main at `857bd68`. The user then requested "hủy T03 và bắt đầu T03 lại".
+T03 attempt 1 is Canceled; PR #3 was closed without deleting its branch or commits.
+The old evidence is historical, not acceptance or evidence of a new live run.
 
 W08 was approved by "duyệt" after the revised proposal to retain raw bodies locally.
-It adds the rule and ignore entry only, and is Awaiting review. Script capture
-support and reconstruction of T03 output remain outside scope. Obtain acceptance
-and separate merge approval for each task/PR; propose any script work before
-another inspection. Further API access requires its own request budget and an
-approved method that saves raw bodies, sanitized output, and metadata locally.
+The user then explicitly accepted W08 with "chấp nhận" after its completion report;
+W08 is Done. PR #4 merged the rule and ignore entry into main. The user's "duyệt"
+after the concrete T03 attempt 2 proposal approves carrying the W08 records and
+cancellation bookkeeping into its new main-based branch, adding capture and
+offline checks, one new bounded live run, and commit/push/PR delivery. The named
+stash remains as backup. See [T03 attempt 2](tasks/T03.md) for the precise budget
+and evidence. Restarting T03 does not reset upstream data changes. No old raw
+response reconstruction, application change, further request budget, or merge is
+authorized. T04 still needs its own proposal after candidate review.
+
+Attempt 2 completed one 11-GET run with 11 raw bodies, request metadata, and
+sanitized output retained locally. Its request budget is consumed; do not rerun
+the script for context or validation. Obtain explicit candidate acceptance and
+separate PR merge approval before treating the task as complete or integrating it.
