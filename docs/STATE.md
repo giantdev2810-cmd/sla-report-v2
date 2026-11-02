@@ -1,11 +1,11 @@
 # Current project state
 
-Updated: 2026-11-02 at T03 attempt 2. The replacement inspection is Awaiting review.
+Updated: 2026-11-02 after explicit T03 attempt 2 acceptance. T03 is Done.
 The application and dependency pins are unchanged.
 
 ## Current objective and authorization
 
-- W05/W06/W07/W08 and T01/T02 are explicitly accepted. W01/W02/W03 still lack
+- W05/W06/W07/W08 and T01/T02/T03 attempt 2 are explicitly accepted. W01/W02/W03 still lack
   recorded explicit acceptance. W08's accepted status and post-merge records are
   carried forward here in the approved T03 restart scope.
 - The user requested "hủy T03 và bắt đầu T03 lại". T03 attempt 1 is Canceled;
@@ -15,7 +15,7 @@ The application and dependency pins are unchanged.
   local context, create a new branch from main, add raw/output/metadata capture
   and offline tests, perform one bounded run, document findings, commit/push/open
   a PR into main. See [T03 attempt 2](plan/tasks/T03.md).
-- Attempt 2 completed 11 GETs, all 200, and is Awaiting review. Its budget is
+- Attempt 2 completed 11 GETs, all 200, and is now explicitly accepted. Its budget is
   consumed; no further live call or rerun is authorized. No architecture,
   application change, or PR merge is authorized by this proposal.
 
@@ -40,7 +40,19 @@ The application and dependency pins are unchanged.
 - Implementation/evidence commit `78c05e3` pushed; PR [#5](https://github.com/giantdev2810-cmd/sla-report-v2/pull/5)
   targets main from the task branch. This delivery record is a documentation
   checkpoint on that same branch. Use live refs for its final hash. No agent merge
-  is authorized or performed; candidate acceptance remains pending.
+  was authorized or performed during delivery; subsequent acceptance is recorded below.
+- A subsequent GitHub check observed PR #5 merged as `b8dd63d` at 09:43:25 UTC.
+  The agent did not run a merge. The user requested
+  "ghi nhận lại" after the offline inspection assessment; those factual updates
+  in the task record, DECISIONS, PLAN, and STATE are included in the later
+  publication request below.
+- The user requested "đẩy lên và chốt t03", explicitly accepting T03 attempt 2
+  and requesting publication of the four-file records. Reuse approved message
+  `chore: restart API inspection with raw capture` on the task branch, push, and
+  open a follow-up PR into main. Raw/pretty files stay local. T04/API/script changes
+  and merging that follow-up PR remain outside scope. Publication commit `0c15f9a`
+  was pushed; follow-up PR [#6](https://github.com/giantdev2810-cmd/sla-report-v2/pull/6) targets main. This delivery record is
+  a checkpoint on the same branch; use live refs for the resulting tip hash.
 
 ## Current implementation and evidence
 
@@ -62,6 +74,12 @@ The application and dependency pins are unchanged.
   Offline reconciliation passed: attempts/statuses/final count agree; body sizes
   match metadata; all bodies parse as JSON; all paths ignored; no raw files tracked;
   raw next_cursor strings absent from metadata/output. No additional GETs used.
+- The user approved readable copies of the existing bodies. Eleven two-space
+  indented UTF-8 JSON files now exist in that capture's `pretty/` subdirectory.
+  Round-trip values/field order match, all eleven raw SHA-256 hashes are unchanged,
+  and derived files are ignored. These retain full private payloads rather than
+  sanitize them. No API call or automatic capture-script change was made; the
+  formatting evidence is included in the approved records publication.
 - Repository checks passed: exact eight-file scope, 26 local links, whitespace,
   Python syntax, statuses, generic credential-pattern scan, preserved backup stash,
   unchanged app/specs/pins/AGENTS/ignore rule, and preserved DECISIONS headings and
@@ -73,10 +91,19 @@ The application and dependency pins are unchanged.
   First-page created_at values parse as UTC ISO strings ending Z. Cause of the
   pagination discrepancy and full acquisition remain unverified.
 - One detail and its one event: integer at, null actor, local-format due_at,
-  no reverting event, has_more=false. Two change pages of five rows accepted
-  cursor continuation, each has_more=true, ascending sequences per page; combined
-  types: 5 request.created and 5 event.created. Feed not drained; expiry,
-  duplicates, current payload semantics, staff changes, and event paging untested.
+  pending status, no reverting event, has_more=false. No first response, reversal,
+  completion/reopening, or event paging was exercised. The 200 request rows span
+  30 October to 2 November UTC; all statuses/priorities appear, with one merged
+  row and no deleted row. This does not represent the graded 12-18 October range.
+- Follow-up offline review: request overlap is page 1 position 100/page 2 position
+  1, with identical payloads. Two five-row change pages accepted cursor continuation
+  and each has_more=true, but ten rows contain only eight distinct seq values:
+  page 1 positions 4/5 repeat as page 2 positions 1/2, identical payloads. Each page
+  is ascending, while the concatenated sequence is not strictly increasing.
+- All five request-payload occurrences in the change rows have updated_at later
+  than the change at, consistent with documented non-event-time payloads. General
+  freshness, expiry, staff changes, full traversal, and date-filter behavior remain
+  unverified. No additional API call or source/output-capture modification was made.
 - DECISIONS preserves the candidate's assumption and four headings; additions
   record supported API observations, AI assistance using write-decisions, and
   the private-sample coverage trade-off. Old findings are not relabeled as new data.
@@ -94,7 +121,9 @@ and not available through the public repository.
 
 ## Next action
 
-Check live branch refs when resuming, then obtain explicit acceptance of
-T03 attempt 2 and separate PR merge approval. Preserve the canceled first attempt
+T03 attempt 2 and its requested records publication are complete;
+PR #5 is already merged. A follow-up PR merge needs separate approval. Prepare
+T04's concrete design proposal only when requested; it has no execution approval.
+Preserve the canceled first attempt
 and W08 backup stash. Do not rerun the script to repopulate context; use the saved
 local evidence. T04 still requires its own concrete design proposal and approval.
