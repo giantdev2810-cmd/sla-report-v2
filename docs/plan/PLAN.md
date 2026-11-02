@@ -360,3 +360,8 @@ The user subsequently requested "đẩy lên remote đi", authorizing the curren
 checkpoint commit/push on docs/m01-mvp-plan before final acceptance, using the
 approved message. M01 remains In progress; PR/merge and new agent live traffic
 are not authorized by that publication request. User starter deletions stay out.
+
+The user later requested "đẩy toàn bộ lên github và tạo PR", expressly authorizing
+remaining notes, user-owned starter deletions, commit/push and a PR now. This
+specific publication exception does not accept M01, authorize merge, publish
+ignored evidence/credentials or change the general review gate for later tasks.

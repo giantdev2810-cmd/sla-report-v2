@@ -1,6 +1,6 @@
 # Development environment
 
-The active application is `app/`, copied unchanged from the supplied Python/FastAPI starter. Docker uses Python 3.12; `.python-version` selects the same version locally. The original starter folders are kept as references.
+The active application is `app/`, copied unchanged from the supplied Python/FastAPI starter. Docker uses Python 3.12; `.python-version` selects the same version locally. The unused starter copies have been removed; app/ remains the active application.
 
 ## Docker (submission runtime)
 

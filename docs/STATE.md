@@ -1,12 +1,17 @@
 # Current project state
 
-Updated: 2026-11-02 during approved M01 implementation/manual checking.
+Updated: 2026-11-02 after M01 checkpoint publication and the request to document
+current status and future priorities. No new runtime verification accompanies this update.
 M01 is In progress; final live report verification is blocked by the failed load.
 Planning is accepted; T05/W09/T04 are Done. The user now explicitly requested
 commit/push of the current M01 checkpoint; PR creation remains gated on acceptance.
 
 ## Scope and current behavior
 
+- The user assumes due_at is synchronized with due_on. DECISIONS records this as
+  current due_on matching the site-local date of the latest eligible event due_at,
+  not all historical deadlines. This is unverified and authorizes no code/fallback
+  change: rule 6 continues using the full event deadline, not date-only due_on.
 - The user approved grouping and then the concrete M01 implementation proposal
   with "duyệt". Scope/policies/budget are in [M01](plan/tasks/M01.md). Approval is
   not final acceptance. All three checkpoints now have code: pure SLA/report,
@@ -27,6 +32,14 @@ commit/push of the current M01 checkpoint; PR creation remains gated on acceptan
 
 ## Current validation and service
 
+- Later manual-check evidence: load 20261102T114645415129Z ended with
+  requests_changed after 2283 attempts (2282 HTTP 200, one HTTP 503). Offline
+  comparison found 1910 included October IDs in all three walks, no included
+  additions/removals, but three request payloads changed between walks 2 and 3:
+  updated_at changed in three and status in two. The approved strict reconciliation
+  rejected the entire snapshot. This is distinct from the earlier transport failure.
+  Another load was observed started at 11:56:40 UTC; do not interrupt or restart it.
+  No new agent-driven upstream call was made to diagnose the manual report error.
 - Final local tests from app/: 53 passed in 1.00s. Final Docker build and container
   suite: 53 passed in 0.76s. All are offline/mock/expected-value checks, not proof
   of full data correctness. An initial root-directory test invocation failed imports
@@ -47,7 +60,7 @@ commit/push of the current M01 checkpoint; PR creation remains gated on acceptan
   unverified. Do not mark M01 Awaiting review/Done as a fully verified MVP yet.
 - Final scoped checks passed: 19 approved files, 39 local links, Python syntax,
   UTF-8/whitespace, DECISIONS headings/assumption, 46 preserved starter deletions,
-  ignored/untracked evidence, empty index and no publication. Reconciliation found
+  ignored/untracked evidence, and empty index at the pre-publication checkpoint. Reconciliation found
   1309 metadata attempts across two failed loads and 1303 raw HTTP bodies; all
   HTTP 200 bodies parse as JSON. Transport failures have no invented body/status.
 - Local final-image smoke checks: page 200, health 200, ready 503, invalid report
@@ -59,7 +72,8 @@ commit/push of the current M01 checkpoint; PR creation remains gated on acceptan
 - Branch docs/m01-mvp-plan, based on main 93d77fe (PR #11). The user requested
   "đẩy lên remote đi", explicitly approving this checkpoint commit/push before
   final acceptance. Reuse approved message `feat: deliver level-one SLA report MVP`.
-  Publish only the 19 M01 files; use live HEAD/upstream refs for the resulting hash.
+  The 19-file checkpoint was committed and pushed as 8245aef, with local/upstream
+  equality verified. The current documentation update is local/uncommitted.
   This request does not accept M01 or authorize a PR/merge. Starter deletions and
   private capture remain excluded; service/runtime is untouched by publication.
 - All 46 user-authored starter deletions remain unstaged, outside M01 scope.
@@ -72,8 +86,25 @@ commit/push of the current M01 checkpoint; PR creation remains gated on acceptan
 
 ## Next action
 
+The reviewer-facing future-work priorities are recorded in DECISIONS: finish
+real-data level 1 verification, investigate completeness, measure/extend six-month
+loading, then add live updates and browsing. These are future plans, not approval
+to implement them or rerun the API. M01 remains unaccepted and no PR was created.
+
 Offline scope/evidence checks are complete; await manual feedback. A new bounded
 agent-driven live session needs explicit approval because the one approved session
 ended unsuccessfully; do not silently retry. Preserve user deletions/stashes, keep
 M01 In progress, and report the live verification limit honestly. Previous elapsed
 assignment time is unmeasured; do not claim compliance with the three-hour cap.
+
+
+## Latest publication authorization
+
+The user requested "đẩy toàn bộ lên github và tạo PR", explicitly authorizing
+publication of all current tracked/unignored work, including their 46 starter
+file deletions, and creation of a PR before final M01 acceptance. This supersedes
+the earlier exclusion/PR timing only for this checkpoint; it does not accept M01,
+authorize merging, publish ignored credentials/capture, or resume API verification.
+The user supplied a 200 access log for 1 October 2026; treat that as user-reported
+HTTP success for one day, not independent full-month or SLA correctness evidence.
+Keep stashes/private evidence. Use live branch/PR refs for publication results.
