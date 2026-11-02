@@ -133,9 +133,12 @@ a policy or authorize additional implementation or API inspection.
 - Intended readiness requires usable request/event and reference data for the full
   six-month range, with bootstrap caught up. A partial load is not ready; caught-up
   feed traversal alone does not demonstrate complete, calculable coverage.
-- Implement pure rules/report first (T05-T13), acquisition/storage under its own
-  integration scope (T14), readiness/performance (T15), freshness/recovery (T16),
-  then browsing. This document does not approve those tasks.
+- Implement pure rules/report with fixtures first (T05-T10), then the store and
+  level 1 reference/request/event acquisition (T10A-T10D), before endpoint/UI and
+  end-to-end review (T11-T13). Extend the existing data path to six months (T14),
+  then readiness/performance (T15), freshness/recovery (T16), and browsing.
+  See the [roadmap](plan/PLAN.md) for dependencies and open-question gates.
+  This scheduling correction does not change the design or approve those tasks.
 - Targets remain readiness within eight minutes, May-October under ten seconds,
   October under five seconds, and changes visible within sixty seconds. None is
   measured or achieved by this document.

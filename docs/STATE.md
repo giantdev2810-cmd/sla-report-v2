@@ -1,81 +1,70 @@
 # Current project state
 
-Updated: 2026-11-02 after explicit review and acceptance of the T04 revision.
-T04 is Done. Application behavior and dependency pins are unchanged.
+Updated: 2026-11-02 after explicit W09 review acceptance. W09 and T04 are Done.
+Application code and the accepted architecture decisions are unchanged.
 
-## Current scope and review gate
+## Current scope and approval
 
-- The user approved the revised T04 proposal with "duyệt" after requesting a new
-  proposal plus a PR-after-review rule. Scope: AGENTS, architecture, DECISIONS,
-  PLAN, STATE, and T04 record. Approval to revise is not acceptance of the result.
-- The user then reported "đã review" and explicitly replied "chấp nhận" after
-  clarification. T04's completed documentation is accepted; approved Git delivery
-  may now proceed. This does not approve application implementation or merging.
-- [Architecture](architecture.md): baseline requests plus full event pages;
-  separate sites/holidays/current staff; feed updates; identity-based memory store,
-  one worker; pure rules and a consistent report snapshot. These are design choices,
-  not implemented behavior. The original feed-only bootstrap is superseded.
-- The user confirmed feed history is incomplete and explicitly left other questions
-  open: pagination completeness, bootstrap/feed consistency, rate limits/performance,
-  version conflicts, event timestamp ties, upstream date-filter timezone, missing
-  references, and recovery. Do not silently select policies for these questions.
-- Current rule: complete work/checks, explain it, and keep Awaiting review. Only
-  after candidate review and explicit acceptance may a PR be created, including
-  a draft PR. Commit/push timing follows the approved proposal; merge is separate.
-  This applies to active, future, and resumed tasks, including deferred T03A.
-- No application changes, dependencies, live API calls, or next-task implementation
-  are authorized by T04.
+- The user requested a new branch to review the roadmap, then "đề xuất sửa" and
+  "duyệt" to W09's concrete five-file proposal. Scope: PLAN, architecture's
+  scheduling note, STATE, W09 record, and restoration of T03A's deferred record.
+- [PLAN](plan/PLAN.md) now inserts draft T10A–T10D before T11–T13: store/snapshot
+  fixtures, references/HTTP, baseline requests, full events/report integration.
+  T14 extends that existing path to six months; T15 measures readiness/performance.
+- Open questions have assigned task proposals but remain unresolved. Dependent
+  behavior needs an approved policy before implementation; no application task,
+  technical solution, dependency, or live API access is approved by W09.
+- The user explicitly accepted [W09](plan/tasks/W09.md) with
+  "đã chấp nhận review". W09 is Done and its approved commit/push/new PR gate is
+  satisfied. Merge still requires separate approval.
 
-## Git and preserved work
+## Git and preserved context
 
-- Current branch: docs/t04-initial-architecture; original base f782423 (merged PR #6).
-  Existing design/checkpoint commits f222c39 and 7667ed2 remain on the branch.
-- PR [#7](https://github.com/giantdev2810-cmd/sla-report-v2/pull/7) is CLOSED at the
-  user's request. Keep it closed. No reset, branch deletion, or history rewrite.
-- Approved message: `docs: revise SLA design and PR review workflow`. Candidate
-  review and acceptance were recorded before delivery. Revision commit 86d7a9c
-  was pushed and PR [#9](https://github.com/giantdev2810-cmd/sla-report-v2/pull/9)
-  opened into main. This delivery checkpoint uses the same approved message;
-  use live refs for its final tip. No merge was authorized or run.
-- T03A is deferred by "task này để sau đi". Only feat/t03a-api-audit was created
-  from main; no audit tool, test, live call, or PR. Its local records are preserved
-  in stash `preserve T03A deferral records before returning to T04`; do not drop it.
-- Preserve the canceled T03 branch/history and stash
-  `preserve W08 acceptance and T03 cancellation`.
-- W05/W06/W07/W08 and T01/T02/T03 attempt 2/T04 are explicitly accepted.
-  W01/W02/W03 still lack recorded explicit acceptance. Merges do not accept tasks.
+- Current branch: docs/w09-review-roadmap, created at user request from updated
+  main 9c207c0. PR #9 was observed merged at 2026-11-02 10:44:13 UTC; the agent
+  did not merge it. Working tree was clean before W09 edits.
+- W09's approved message: `docs: align roadmap with accepted SLA architecture`.
+  Accepted revision commit 059cba7 was pushed; PR
+  [#10](https://github.com/giantdev2810-cmd/sla-report-v2/pull/10) targets main.
+  This delivery checkpoint uses the same approved message; use live refs for its
+  final tip. No delivery occurred before review acceptance; no merge was run.
+- [T03A](plan/tasks/T03A.md) is Approved — deferred by user. Its task record was
+  restored byte-for-byte from stash `preserve T03A deferral records before returning
+  to T04`; old PLAN/STATE files were not applied. The stash remains as backup.
+  Only feat/t03a-api-audit was created earlier; no audit tool/tests/API run/PR.
+  The current PR-after-review gate overrides historical delivery wording in it.
+- Preserve stash `preserve W08 acceptance and T03 cancellation`, canceled T03
+  branch/history, and private raw/pretty captures. PR #7 remains closed.
+- W05/W06/W07/W08/W09 and T01/T02/T03 attempt 2/T04 are explicitly accepted.
+  W01/W02/W03 still lack recorded explicit acceptance.
 
-## Implementation and validation evidence
+## Implementation and evidence
 
-- Active starter is app/ (package app/app/, tests app/tests/, page app/static/).
+- Active starter: app/; package app/app/, tests app/tests/, page app/static/.
   By inspection health returns 200, ready 503, report/browse 501. No ingestion,
-  store, SLA calculation, live refresh, or browsing implementation exists.
-- T02 historical checks passed: compatible pinned packages, local health test,
-  Docker build/new-image health test, existing service HTTP health. They do not
-  establish current container freshness or report correctness.
-- T03 attempt 1 is Canceled; attempt 2 is Done by "đẩy lên và chốt t03". Eleven
-  offline capture tests passed before the one 11-GET run, all 200, on 2026-11-02
-  at 09:33:25-09:33:27 UTC. Its request budget is consumed; do not rerun.
+  store, SLA calculation, refresh, or browsing implementation exists.
+- [Architecture](architecture.md) remains request/event baseline loading, separate
+  sites/holidays/current staff, feed updates, one-worker process-local memory,
+  pure rules, and consistent report snapshots. W09 changes only implementation
+  scheduling, not those choices or the listed open questions.
+- Feed history insufficiency is candidate-reported. T03's partial capture shows
+  request-page overlap/count discrepancies and repeated changes, not full coverage.
+  Its one 11-GET run, all 200, and eleven prior offline capture tests are historical
+  evidence. No additional practice API request or rerun is authorized.
 - Private capture: `.local/inspect/T03/20261102T093325641343Z/`, eleven raw bodies
-  totaling 76276 bytes, eleven metadata rows, 32 sanitized output rows. Eleven
-  readable copies in pretty/ preserve values/order and unchanged raw hashes.
-  All remain local/ignored; publish neither payloads nor raw cursors.
-- T03 evidence: overlapping request pages and inconsistent totals; two unfinished
-  feed pages contain ten rows/eight unique seq values and four request payload IDs.
-  Payload updated_at can follow change at. The incomplete capture cannot prove
-  historical coverage; insufficient history is candidate-reported. Full acquisition,
-  rate limits, expiry, staff refresh, and graded-range correctness remain unverified.
-- Revised checks passed: exact six-file scope, 27 local link targets, diff
-  whitespace, preserved DECISIONS headings/assumption, review statuses, both stashes,
-  ignored/untracked inspection data, and generic credential/known-cursor scan.
-  At the pre-review checkpoint HEAD was 7667ed2, the index empty, and PR #7
-  rechecked CLOSED. No delivery occurred before acceptance. Manual
-  seven-rule/contract and workflow traces passed.
-  The 45-minute synthetic example is not execution evidence. No runtime tests
-  or live API calls were made; no completeness/readiness/performance claim follows.
+  totaling 76276 bytes, metadata/output, and eleven readable copies under pretty/.
+  Keep all ignored/local; raw cursors and payloads are not public context.
+- W09 checks passed: exact five-file scope, 37 local links, task IDs/goals retained
+  except approved T14, dependency order, architecture scheduling-only diff,
+  byte-identical restored T03A, both stashes, statuses, PR gate, whitespace,
+  generic credential scan, and ignored/untracked inspection files. At the pre-review
+  checkpoint HEAD was 9c207c0 with empty index. Manual architecture/contract mapping passed.
+  No runtime tests or live API calls were made; the dependency walkthrough and
+  historical checks do not prove SLA correctness, coverage or performance.
 
 ## Next action
 
-T04's accepted revision and approved Git delivery are complete. PR #9 merge remains
-separately authorized. T03A stays deferred, and T05 needs its own
-proposal. Actual total time against the three-hour budget has not been measured.
+W09's accepted revision and approved Git delivery are complete. PR #10 merge
+needs separate approval. T03A stays deferred; T05 and each later task need
+their own proposals.
+Actual total time against the assignment's three-hour budget has not been measured.

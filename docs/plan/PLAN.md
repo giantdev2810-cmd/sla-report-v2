@@ -22,10 +22,12 @@ validation snapshot; it does not grant permission to start another task.
 | [W06](tasks/W06.md) | Separate the plan from task records | Done |
 | [W07](tasks/W07.md) | Require a separate branch and PR for each new task | Done |
 | [W08](tasks/W08.md) | Require local raw API inspection evidence | Done |
+| [W09](tasks/W09.md) | Align roadmap dependencies with the accepted architecture | Done |
 | [T01](tasks/T01.md) | Check environment availability | Done |
 | [T02](tasks/T02.md) | Install pinned dependencies and verify the starter | Done |
 | [T03 attempt 1](tasks/T03-attempt-1.md) | Inspect a bounded practice API sample (canceled first attempt) | Canceled |
 | [T03 attempt 2](tasks/T03.md) | Restart inspection with private raw capture | Done |
+| [T03A](tasks/T03A.md) | API data audit tool | Approved — deferred by user |
 | [T04](tasks/T04.md) | Choose initial data flow and module boundaries | Done |
 
 ## Approval and review loop
@@ -103,7 +105,12 @@ proposal with raw-output capture; attempt 2 is explicitly accepted and Done. T04
 first documentation proposal was approved by "ừ". The revised design and review
 gate were approved by the later "duyệt". The user then reported "đã review" and
 explicitly accepted with "chấp nhận"; T04 is Done.
-T05–T22 remain **Draft**; technical decisions and execution approval are pending.
+T05–T22, including the inserted T10A–T10D steps, remain **Draft**; their
+implementation decisions and execution approval are pending. The user approved
+W09's roadmap revision with "duyệt", then accepted the reviewed result with
+"đã chấp nhận review"; W09 is Done. Acceptance does not approve the application
+tasks described by the revised roadmap. T03A is deferred
+by the user and is not a prerequisite for the application tasks below.
 Criteria come from the supplied specification. Explain
 proposed regrouping and split further if the diff would be difficult to review.
 
@@ -126,19 +133,32 @@ proposed regrouping and split further if the diff would be difficult to review.
 | T08 | Determine response fields and target result | Earliest eligible processing actor, current staff name, thresholds, and response nulls |
 | T09 | Determine completed-late result | Last eligible completion, latest eligible deadline, local parsing, strict comparison, and null cases |
 | T10 | Assemble rows and responder summary | Required fields/types; responder counts agree with included rows |
+| T10A | Add the in-memory store and consistent snapshots | After T10: fixture-backed identity storage and consistent report reads; no live API access |
+| T10B | Load sites, holidays, and current staff through the HTTP client | After T10A: reference coverage and load failures are identifiable; approve HTTP/lifecycle/error policies first |
+| T10C | Acquire baseline requests for level 1 | After T10B: approve acquisition range, date-filter semantics, pagination/reconciliation and duplicate/version handling; record coverage and limits |
+| T10D | Load full event histories and integrate report calculations | After T10C and T05–T10: traverse all event pages for required requests, populate the store, and connect the report to its snapshot |
 | T11 | Implement report endpoint validation/output | Contract JSON and 400 for missing/invalid/reversed dates; error-handling choices approved first |
 | T12 | Show the report on the starter page | Date selection, rows, summary, and understandable loading/error behavior |
 | T13 | Review level 1 end to end | Candidate traces a request from source to report; rule checks and representative report results recorded |
 
-T05–T10 can use agreed local examples before live integration. Fixtures, function
-interfaces, tests, libraries, and file layout must be proposed for approval. The
-order above does not select a particular architecture.
+T05–T10 can use agreed local examples before live integration. T10A then introduces
+the store/snapshot boundary; T10B–T10D acquire and integrate the data required for
+level 1. T11 depends on that report data path, followed by T12 and T13. T13 must
+trace actual acquisition through the HTTP report, not only fixtures; record results
+for October and 12–18 October and their limits. Level 1 acquisition does not imply
+six-month readiness or performance. Fixtures, interfaces, libraries, file layout,
+checks, and any live access must be separately proposed and approved per task.
+
+The accepted architecture defines module responsibilities. These draft steps
+organize implementation without selecting unresolved ingestion policies or changing
+the business rules. T05–T22 retain their identifiers; inserted steps do not rename
+performed work. See the dependency and open-question gates below.
 
 ### Levels 2–4, in grading order
 
 | ID | Small unit of work | Acceptance / review focus |
 | --- | --- | --- |
-| T14 | Acquire and retain six-month report data | Approved ingestion/storage; pagination, bounded API use, and retry behavior |
+| T14 | Extend existing ingestion/store coverage to six months | After T13: build on T10A–T10D, verify six-month data/event/reference coverage, and assess HTTP cost, limits and performance changes |
 | T15 | Add readiness and measure performance | Ready means usable data; record month/six-month timings against contract targets and any limitations |
 | T16 | Apply upstream changes | Approved refresh/recovery approach; relevant changes visible within 60 seconds, including current staff names |
 | T17 | Add browse filters and sorting | Contract filters, sort directions, null placement, and tie order checked |
@@ -147,6 +167,37 @@ order above does not select a particular architecture.
 
 These later tasks are outlines. Split T14, T16, and T18 further once observations
 and design make their scope concrete. Do not start a later level automatically.
+
+### Dependencies and open-question gates
+
+```text
+T05-T10: pure rules and report fixtures
+  -> T10A: store/snapshot -> T10B: references -> T10C: requests
+  -> T10D: full events + report integration -> T11 -> T12 -> T13
+  -> T14: six-month expansion -> T15: readiness/performance
+  -> T16: updates/recovery -> T17 -> T18 -> T19
+```
+
+The questions below remain open by user instruction. Their assigned tasks must
+present and obtain approval for a policy before implementing dependent behavior.
+A task may perform only its approved independent work while a question is open;
+neither this table nor roadmap approval resolves it or authorizes API calls.
+
+| Open question | Proposal/checkpoint responsible |
+| --- | --- |
+| Events with equal `at` and earliest/latest selection | T08/T09 |
+| HTTP lifecycle, rate limits, request budget, retries and malformed responses | T10B–T10D; reassess for six-month load in T14 |
+| Request pagination completeness and duplicate/version conflicts | T10C; update conflicts revisited in T16 |
+| Acquisition range and upstream date-filter timezone | T10C; expand/recheck range in T14 |
+| Baseline consistency and coordination with concurrent/feed changes | T10C; refresh/recovery policy in T16 |
+| Missing reference or event relationships | T10B–T10D |
+| Concrete consistent-snapshot mechanism | T10A |
+| Feed conflicts, cursor expiry, recovery and current staff refresh | T16 |
+| Consistency/exactly-once appearance across changing browse pages | T18 |
+
+The readiness and timing targets remain unchanged in [contract](../contract.md).
+Choosing a policy later must not silently turn incomplete data into a complete
+report or substitute the feed for the missing baseline history.
 
 ### Delivery
 
@@ -215,3 +266,14 @@ is Done; approved revision commit 86d7a9c was pushed and replacement
 [PR #9](https://github.com/giantdev2810-cmd/sla-report-v2/pull/9) opened into main
 after acceptance. PR #7 stays closed; merge needs separate approval. T03A stays
 deferred and T05 still needs its own proposal.
+
+PR #9 was subsequently observed merged as 9c207c0. At the user's request, branch
+docs/w09-review-roadmap was created from that updated main. The user approved W09
+with "duyệt" after the concrete five-file proposal: insert T10A–T10D, narrow T14,
+assign open-question gates, align the architecture's scheduling note, and restore
+the T03A record without dropping its stash. See [W09](tasks/W09.md) for review
+evidence. The user then explicitly accepted the reviewed work with
+"đã chấp nhận review". W09 is Done; accepted revision 059cba7 was pushed and
+[PR #10](https://github.com/giantdev2810-cmd/sla-report-v2/pull/10) opened into main
+after acceptance. Merge needs separate approval. T03A stays deferred and T05
+needs its own proposal.
