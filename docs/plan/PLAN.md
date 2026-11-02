@@ -211,6 +211,7 @@ rule, and approved that concrete six-file proposal with "duyệt". The current
 design uses requests/events for baseline data and the feed for updates, leaving
 the other questions open. No additional live inspection is authorized. The user
 subsequently reported "đã review" and explicitly accepted with "chấp nhận". T04
-is Done; its approved commit/push and replacement PR can now proceed. PR #7 stays
-closed; merge needs separate approval. T03A stays deferred and T05 still needs
-its own proposal.
+is Done; approved revision commit 86d7a9c was pushed and replacement
+[PR #9](https://github.com/giantdev2810-cmd/sla-report-v2/pull/9) opened into main
+after acceptance. PR #7 stays closed; merge needs separate approval. T03A stays
+deferred and T05 still needs its own proposal.

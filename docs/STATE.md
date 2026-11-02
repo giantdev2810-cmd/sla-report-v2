@@ -33,8 +33,10 @@ T04 is Done. Application behavior and dependency pins are unchanged.
 - PR [#7](https://github.com/giantdev2810-cmd/sla-report-v2/pull/7) is CLOSED at the
   user's request. Keep it closed. No reset, branch deletion, or history rewrite.
 - Approved message: `docs: revise SLA design and PR review workflow`. Candidate
-  review and acceptance are now recorded. Commit/push the six-file scope and
-  create the approved new PR into main; actual commit/URL pending delivery.
+  review and acceptance were recorded before delivery. Revision commit 86d7a9c
+  was pushed and PR [#9](https://github.com/giantdev2810-cmd/sla-report-v2/pull/9)
+  opened into main. This delivery checkpoint uses the same approved message;
+  use live refs for its final tip. No merge was authorized or run.
 - T03A is deferred by "task này để sau đi". Only feat/t03a-api-audit was created
   from main; no audit tool, test, live call, or PR. Its local records are preserved
   in stash `preserve T03A deferral records before returning to T04`; do not drop it.
@@ -74,6 +76,6 @@ T04 is Done. Application behavior and dependency pins are unchanged.
 
 ## Next action
 
-Complete the accepted T04 revision's approved commit/push/new PR and record delivery.
-Merge remains separately authorized. T03A stays deferred, and T05 needs its own
+T04's accepted revision and approved Git delivery are complete. PR #9 merge remains
+separately authorized. T03A stays deferred, and T05 needs its own
 proposal. Actual total time against the three-hour budget has not been measured.
