@@ -37,7 +37,10 @@ The application and dependency pins are unchanged.
   docs/plan/tasks/T03.md, T03-attempt-1.md, W08.md, PLAN, STATE, and DECISIONS.
   Message: `chore: restart API inspection with raw capture`. Push the task branch
   and create a PR to main; keep merge approval separate.
-- Git delivery: pending. Use live refs and the delivery report for the final hash.
+- Implementation/evidence commit `78c05e3` pushed; PR [#5](https://github.com/giantdev2810-cmd/sla-report-v2/pull/5)
+  targets main from the task branch. This delivery record is a documentation
+  checkpoint on that same branch. Use live refs for its final hash. No agent merge
+  is authorized or performed; candidate acceptance remains pending.
 
 ## Current implementation and evidence
 
@@ -91,7 +94,7 @@ and not available through the public repository.
 
 ## Next action
 
-Finish approved Git delivery and check refs, then obtain explicit acceptance of
+Check live branch refs when resuming, then obtain explicit acceptance of
 T03 attempt 2 and separate PR merge approval. Preserve the canceled first attempt
 and W08 backup stash. Do not rerun the script to repopulate context; use the saved
 local evidence. T04 still requires its own concrete design proposal and approval.
