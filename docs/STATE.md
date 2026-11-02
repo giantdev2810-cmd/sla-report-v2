@@ -36,6 +36,10 @@ workflow documentation plus an ignore rule only. Application code is unchanged.
   `docs: require saved API inspection output`, push this branch, and open a PR to
   main. The task record and delivery report hold the resulting commit/PR evidence;
   check live refs for the final checkpoint hash and tracking state.
+- Implementation commit `4b83737` was pushed. GitHub reported that matching
+  [PR #4](https://github.com/giantdev2810-cmd/sla-report-v2/pull/4) already existed;
+  its branch/base and OPEN state were verified, and its empty body was populated
+  with scope/checks. This delivery record is a checkpoint on the same branch.
 
 ## Implementation and historical evidence
 
@@ -71,7 +75,7 @@ correctness, readiness, performance, refresh, or pagination guarantees.
 
 ## Next action
 
-Complete the approved W08 commit/push/PR delivery, then obtain explicit candidate
-acceptance and separate merge approval. Keep T03 review/merge decisions separate.
+Check final branch refs when resuming, then obtain explicit candidate acceptance
+of W08 and separate approval to merge PR #4. Keep T03 review/merge decisions separate.
 Any change to the inspection script or new live request budget needs a concrete
 proposal and approval. Do not regenerate missing T03 raw responses.
