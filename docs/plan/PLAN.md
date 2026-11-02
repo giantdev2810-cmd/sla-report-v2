@@ -21,8 +21,10 @@ validation snapshot; it does not grant permission to start another task.
 | [W05](tasks/W05.md) | Document comment and docstring principles | Done |
 | [W06](tasks/W06.md) | Separate the plan from task records | Done |
 | [W07](tasks/W07.md) | Require a separate branch and PR for each new task | Done |
+| [W08](tasks/W08.md) | Require local raw API inspection evidence | Awaiting review |
 | [T01](tasks/T01.md) | Check environment availability | Done |
 | [T02](tasks/T02.md) | Install pinned dependencies and verify the starter | Done |
+| [T03](https://github.com/giantdev2810-cmd/sla-report-v2/pull/3) | Inspect a bounded practice API sample (separate PR) | Awaiting review |
 
 ## Approval and review loop
 
@@ -70,6 +72,7 @@ acceptance. Do not pre-fill speculative technical decisions for the whole roadma
 | Decisions | Proposed choice, reason, relevant alternative, and cost/limitation; approval tracked separately |
 | Acceptance | Observable results the candidate can review |
 | Verification | Meaningful examples/checks and their scope |
+| API inspection evidence | For inspection tasks: approved capture method, ignored local raw-body/output directory, request metadata, and sanitized findings; follow AGENTS's API inspection output rules |
 | Estimate | Implementation plus explanation/review time; revise transparently if needed |
 | Approval | User message reference and approved scope/decisions, or pending |
 | Result | Actual files, walkthrough, check outcomes, and uncertainty |
@@ -82,9 +85,9 @@ expansion. Approval of this document is not blanket implementation approval.
 
 ## Draft roadmap
 
-T01 and T02 are accepted; their execution records are linked
-in the task index. T03–T22 remain **Draft**; technical decisions and execution
-approval are pending. Criteria come from the supplied specification. Explain
+T01 and T02 are accepted; T03 is Awaiting review in separate PR #3, whose files are
+not part of W08's main-based branch. T04–T22 remain **Draft**; technical decisions
+and execution approval are pending. Criteria come from the supplied specification. Explain
 proposed regrouping and split further if the diff would be difficult to review.
 
 ### Preparation
@@ -93,7 +96,7 @@ proposed regrouping and split further if the diff would be difficult to review.
 | --- | --- | --- |
 | T01 | Check environment availability | Current Docker daemon and pinned dependency evidence, distinguished from historical failures |
 | T02 | Resolve environment issues if needed | Approve needed changes first; demonstrate starter build, health, and tests with limits stated |
-| T03 | Inspect the practice API with an agreed request scope | Sanitized representative data and pagination observations; first-call data-change timer explained before access |
+| T03 | Inspect the practice API with an agreed request scope | Sanitized representative data and pagination observations; first-call data-change timer explained before access; future inspections retain local raw bodies/output per W08 |
 | T04 | Choose initial data flow and module boundaries | User approves responsibilities, data access, storage if any, and costs; record chosen design in architecture.md |
 
 ### Level 1: correct report
@@ -148,10 +151,13 @@ Reassess the budget at checkpoints; propose scope reductions and document
 unfinished work honestly.
 
 W05, W06, W07, T01, and T02 are accepted. W01/W02/W03 still lack recorded explicit
-acceptance. The user confirmed publishing the existing documentation on
-`feat/sla-report` with `docs: organize task records and review workflow`.
-Verify that delivery using Git refs and a clean working tree before proposing
-T03 with its branch/commit/PR plan and a bounded practice API request budget; explain
-that upstream data starts changing five minutes after the first call. Later
-tasks, service replacement, application changes, API requests, and commits need
-approval of their specific scope; this roadmap does not authorize them.
+acceptance. The earlier documentation was published as `7d84cb1` and merged into
+main at `857bd68`. T03's implementation/evidence and task record are on its own
+branch in PR #3; T03 is Awaiting review. No merge is authorized by W08.
+
+W08 was approved by "duyệt" after the revised proposal to retain raw bodies locally.
+It adds the rule and ignore entry only, and is Awaiting review. Script capture
+support and reconstruction of T03 output remain outside scope. Obtain acceptance
+and separate merge approval for each task/PR; propose any script work before
+another inspection. Further API access requires its own request budget and an
+approved method that saves raw bodies, sanitized output, and metadata locally.
