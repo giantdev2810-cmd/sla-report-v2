@@ -30,6 +30,10 @@ and dependency pins remain unchanged.
   task branch and create a PR targeting main. Separate merge approval is required.
 - Git delivery details are recorded in the task record and PR. Use live refs and
   the delivery report to check final tracking state and the resulting commit.
+- Implementation/evidence commit `72651b1` was pushed; PR
+  [#3](https://github.com/giantdev2810-cmd/sla-report-v2/pull/3) targets main.
+  This delivery documentation is a checkpoint on the same task branch. No PR
+  merge has been performed; candidate acceptance remains pending.
 
 ## Implementation and environment
 
@@ -82,8 +86,8 @@ and dependency pins remain unchanged.
 
 ## Next action
 
-Finish the approved T03 commit/push/PR delivery and check its final refs. Obtain
-candidate acceptance of T03 and separate approval to merge its PR. Then propose
+Check final task-branch refs when resuming. Obtain candidate acceptance of T03
+and separate approval to merge PR #3. Then propose
 T04's data flow and module boundaries, addressing the observed request pagination
 uncertainties before selecting ingestion behavior. Further API access, a new task,
 application changes, service replacement, or unapproved Git actions need their own
