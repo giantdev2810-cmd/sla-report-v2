@@ -22,7 +22,9 @@ T04 is Awaiting review. Application behavior and dependency pins are unchanged.
 - Clean main was fast-forwarded to f782423 before creating
   `docs/t04-initial-architecture`. No reset, deletion, or history rewrite.
 - Approved message: `docs: define initial SLA data flow`; exact five-file scope
-  recorded in T04. Commit/push/PR evidence pending delivery.
+  recorded in T04. Design commit f222c39 is pushed; PR
+  [#7](https://github.com/giantdev2810-cmd/sla-report-v2/pull/7) targets main. This
+  delivery checkpoint uses the same approved message; use live refs for final tip.
 - Preserve the canceled T03 branch/history and named stash
   `preserve W08 acceptance and T03 cancellation` as backup.
 - W05/W06/W07/W08, T01/T02/T03 attempt 2 are explicitly accepted.
@@ -50,14 +52,15 @@ T04 is Awaiting review. Application behavior and dependency pins are unchanged.
   graded date ranges, and rule edge cases were not validated. See T03 for details.
 - T04 checks passed: exact five-file scope, 28 local links, preserved DECISIONS
   headings/assumption, review statuses, backup stash, ignored/untracked inspection
-  data, generic credential patterns, and tracked diff whitespace. Manual rule
+  data, generic credential patterns, and tracked/staged diff whitespace. Manual rule
   mapping/arithmetic review passed. No runtime tests or API calls were made.
   Its synthetic walkthrough is not an executed report; no coverage, readiness,
   performance, freshness, or browsing guarantee is established.
 
 ## Next action
 
-Finish T04 checks and approved Git delivery, then explain the design for review.
-Keep T04 Awaiting review until explicitly accepted. Any new technical choice needs
+T04 checks and approved Git delivery are complete; candidate review is next.
+Keep T04 Awaiting review until explicitly accepted. PR #7 merge needs separate
+explicit approval. Any new technical choice needs
 approval; T05 needs a separate proposal. Actual total time against the assignment's
 three-hour budget has not been measured.
