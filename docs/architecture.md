@@ -5,8 +5,8 @@ request/event acquisition and the PR-after-review workflow. This describes the
 chosen direction, not implemented behavior. The candidate reported "đã review"
 and explicitly accepted with "chấp nhận"; T04 is Done as a documentation task.
 T05 implements only rule 2's eligible_events helper, explicitly accepted by the
-candidate with "chấp nhận t05". Ingestion, storage, remaining SLA calculations, endpoints, and refresh
-are not implemented beyond the starter behavior.
+candidate with "chấp nhận t05". M01 implements the other rules, report, store, acquisition, endpoint and page,
+pending integration verification/review. Live refresh and browsing remain deferred.
 
 ## Sources and evidence
 
@@ -55,8 +55,8 @@ HTTP dates --> main --> report --> pure SLA rules --> rows + summary --> main JS
 ## Module boundaries
 
 Paths are under `app/app/`. main.py and helpdesk.py are the starter modules;
-sla.py now contains only eligible_events for rule 2. Other modules and remaining
-rules are future work requiring approved interfaces and checks.
+M01 adds the remaining SLA/report/store/ingestion modules and private capture.
+Implementation is in progress; final evidence and acceptance are in the M01 record.
 
 | Module | Responsibility | Boundary |
 | --- | --- | --- |
@@ -105,7 +105,7 @@ event-based calculations. It preserves retained payloads/order without mutation;
 two passes and a set cost O(n) time and O(n) space. It assumes valid id/reverts_id
 fields and does not validate/deduplicate input or establish complete history.
 The candidate-approved chain interpretation excludes A/B/C for B->A and C->B,
-without restoring A. This is recorded in DECISIONS; no endpoint uses the helper yet.
+without restoring A. This is recorded in DECISIONS; the M01 calculation path uses the helper.
 
 Responder counts aggregate only included result rows, using current staff from
 the same snapshot rather than historical actor names.
@@ -143,10 +143,13 @@ a policy or authorize additional implementation or API inspection.
 - Intended readiness requires usable request/event and reference data for the full
   six-month range, with bootstrap caught up. A partial load is not ready; caught-up
   feed traversal alone does not demonstrate complete, calculable coverage.
-- Implement pure rules/report with fixtures first (T05-T10), then the store and
-  level 1 reference/request/event acquisition (T10A-T10D), before endpoint/UI and
-  end-to-end review (T11-T13). Extend the existing data path to six months (T14),
-  then readiness/performance (T15), freshness/recovery (T16), and browsing.
+- Group remaining level 1 work into M01: correct calculations with fixtures
+  (T06-T10, reusing T05), real-data store/reference/request/event integration
+  (T10A-T10D), then the endpoint/UI, Docker run and end-to-end checks (T11-T13).
+  These are checkpoints within one MVP task, not individual branch/PR deliveries.
+  M02 expands to six months/readiness/performance (T14-T15); M03 adds live updates
+  (T16); M04 adds browsing (T17-T19). One final review/acceptance gates M01's PR;
+  its concrete implementation proposal and open-question policies remain pending.
   See the [roadmap](plan/PLAN.md) for dependencies and open-question gates.
   This scheduling correction does not change the design or approve those tasks.
 - Targets remain readiness within eight minutes, May-October under ten seconds,
@@ -162,3 +165,16 @@ a policy or authorize additional implementation or API inspection.
 See [rules](rules.md), [contract](contract.md), [API](api.md), and
 [T03 evidence](plan/tasks/T03.md). Rule fixtures, complete-feed reconciliation,
 update/replay, performance, freshness, and browsing checks remain future work.
+
+
+## M01 execution policies
+
+The user approved the concrete policies in [M01](plan/tasks/M01.md): synchronous
+bounded on-demand loads, three request walks around full event acquisition,
+identity/version conflict checks, atomic copied snapshots, and subrange caching.
+No automatic refresh is performed. Calendar arithmetic uses UTC elapsed seconds
+inside site-local work windows, with holiday splitting/union for overnight work.
+Equal event times use ID order; ambiguous/nonexistent local wall times fail.
+Invalid dates return 400; malformed/conflicting upstream data 502; unusable
+load/transport/budget failures 503. Six-month readiness is not verified. Repeated
+stable walks do not guarantee complete acquisition or an upstream snapshot.

@@ -6,7 +6,7 @@ The rules are in the brief on your invitation page. Everything else is here.
 docs/contract.md    what your app must return (graded automatically)
 docs/rules.md       the brief's rules with the exact field names
 docs/api.md         the helpdesk API your app reads
-starters/           a runnable starter in Node, Rails and Python: pick one
+app/                the active Python/FastAPI application (unused starters removed)
 DECISIONS.md        fill this in; it is part of your submission
 docker-compose.yml  runs your app
 .env.example        copy to .env and paste in your practice API details
@@ -23,7 +23,7 @@ You need Docker (with Compose) and Git.
 ```bash
 git init && git add -A && git commit -m "chore: start from the kit"
 cp .env.example .env                 # paste in HELPDESK_URL and HELPDESK_TOKEN
-cp -r starters/python-fastapi app   # skip if app/ already exists
+# app/ already contains the active Python/FastAPI application
 docker compose up --build            # your app on http://localhost:8080
 curl http://localhost:8080/health    # {"ok": true}
 docker compose run --rm app test     # your tests, exit 0 = pass

@@ -7,6 +7,9 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 <!-- Anything the brief did not say that you had to decide. -->
 - I assume the Reviewers are both human and agents
 - I assume reverting a reversal does not restore an earlier event. If B reverts A and C reverts B, all three are excluded under rule 2.
+- For equal event timestamps, I use event ID as the tie-breaker: the lowest ID is earliest and the highest is latest. The brief does not specify a tie-breaker.
+- An overnight work window belongs to its opening weekday; each local calendar day's holiday excludes that portion of the window. Overlapping work windows are unioned rather than counted twice.
+- I assume the current request's due_on stays synchronized with the site-local date of the latest eligible event due_at. This is not independently verified; due_on has no time component, so rule 6 still uses the event due_at, including its time, rather than replacing it with due_on. Historical event deadlines need not all match the current request date.
 
 ## What I found in the API or data
 
@@ -28,10 +31,23 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 - Codex initially proposed feed-only bootstrap without established historical coverage. After the candidate confirmed that history is incomplete, Codex revised the approved T04 design to request/event baseline loading and feed updates, leaving other questions explicitly open. The local `write-decisions` skill guided separating candidate-reported facts, bounded capture evidence, and design choices. The candidate also requested PR creation only after review and acceptance; this architecture is not an implemented or tested report.
 - Codex implemented the pure rule-2 filter and synthetic tests after candidate approval, including the agreed non-restoring reversal chain. Ten rule cases and the existing health test passed; these checks cover the helper's behavior, not live data completeness or the remaining SLA rules. The local `write-decisions` skill guided recording the interpretation as an assumption rather than an API finding.
 
+- Codex implemented the approved grouped MVP with pure rules, report aggregation, bounded acquisition, atomic copied snapshots, endpoint/UI and private capture, then generated mock/expected-value tests. The final suite passed 53 tests locally and in Docker. The first root-directory invocation failed imports and was corrected to run from app/. Live acquisition failed after three transport errors, so generated code and passing mock tests are not claimed as real-data report validation.
+
 ## Trade-offs and what I would do next
 
 <!-- What you left out to stay within 3 hours, and what you would do with more time. -->
 
 - A bounded sample with private raw capture permits detailed offline investigation without spending further API calls. It does not prove full coverage, and raw files are unavailable to public-repository reviewers; the task record provides sanitized evidence while the source bodies remain on the local machine.
-- The approved revision replaces feed-only bootstrap with request pages plus full per-request event histories, using the feed for updates. This avoids depending on the feed for initial history at greater HTTP cost; acquisition completeness, bootstrap/feed coordination, rate limits, and conflict policies remain open rather than implemented guarantees.
-- The initial design selects one worker with process-local memory rather than SQLite to limit database work within the time budget. Restart requires a full reload, multiple workers would have separate stores, and consistent read snapshots add memory/copying cost. Pure SLA calculations separate rule verification from network and storage behavior; these modules are not implemented yet.
+- M01 loads baseline data from request pages and full per-request event histories rather than relying on incomplete feed history. This has a higher HTTP cost; initial conflict/retry/reconciliation policies are implemented, but acquisition completeness is unproven and feed updates remain deferred.
+- M01 uses one worker with process-local memory rather than SQLite to limit database work. Restart requires a full reload, multiple workers would have separate stores, and copied snapshots add memory/copying cost. Pure SLA calculations, acquisition and storage are implemented; successful real-data report validation is still missing.
+
+- M01 uses three full request walks and sequential bounded HTTP to detect observed inconsistencies before publication, at substantial first-load cost. Stable walks cannot prove that the upstream omitted nothing, and no automatic refresh is provided; snapshots remain cached for subranges until another load or restart.
+- Ambiguous/nonexistent local wall times fail rather than silently selecting a DST offset. With more time, I would clarify the intended business interpretation and extend timezone/DST fixtures before supporting those cases.
+
+With more time, I would prioritize the following work in the assignment's level order:
+
+1. Complete the level 1 evidence first: restore a reliable upstream connection, approve a new bounded verification run, and demonstrate October and 12-18 October reports with source-to-row walkthroughs and manual UI feedback. The failed live load and 53 passing offline tests do not establish end-to-end correctness.
+2. Investigate pagination completeness and baseline consistency using retained evidence and controlled change tests. Three agreeing request walks are only a practical check; I would seek an upstream snapshot or stable pagination boundary if available rather than claim that matching counts prove coverage.
+3. Extend and measure six-month acquisition/readiness/report performance. I would measure request cost before choosing bounded concurrency, avoid flooding rate limits, and evaluate durable storage such as SQLite plus resumable loading to reduce restart cost. Those are future options, not current guarantees.
+4. Add idempotent change-feed updates, current staff refresh, and cursor-expiry/recovery checks, measuring visibility against the 60-second target. The feed would update a complete baseline rather than replace its missing history.
+5. Implement browse filters/sorts and a cursor strategy tested under concurrent changes for exactly-once appearance. I would also add operational metrics for load progress, retry counts and snapshot age, while keeping private raw evidence out of public logs.

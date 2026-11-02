@@ -1,6 +1,6 @@
 # Development environment
 
-The active application is `app/`, copied unchanged from the supplied Python/FastAPI starter. Docker uses Python 3.12; `.python-version` selects the same version locally. The original starter folders are kept as references.
+The active application is `app/`, copied unchanged from the supplied Python/FastAPI starter. Docker uses Python 3.12; `.python-version` selects the same version locally. The unused starter copies have been removed; app/ remains the active application.
 
 ## Docker (submission runtime)
 
@@ -49,3 +49,29 @@ When an app container is already running, the build/test commands above validate
 ## Starter behavior
 
 Only the starter is configured so far. `/health` returns 200; `/ready` intentionally returns 503, and the report and browse endpoints return 501 until implemented. Starting this starter does not contact the practice API.
+
+
+## M01 report MVP
+
+Run `docker compose up --build -d app`, then open http://localhost:8080 and select
+a date range. The first report loads references, scans requests, obtains all
+needed event pages and reconciles requests. It can take minutes. Subranges reuse
+the last successful snapshot; no automatic refresh is implemented yet. Restart
+loses the snapshot. `/ready` remains 503 until six-month usability is verified;
+`/api/requests` remains the level-4 stub.
+
+Run local tests from app/ with `..\.venv\Scripts\python.exe -B -m pytest -q`,
+or use `docker compose run --rm --no-deps app test`.
+
+Each load has at most 6000 upstream GET attempts, thirty minutes, three attempts
+per GET and at least 250 ms between starts. Invalid dates return 400; malformed
+or conflicting data 502; transport/rate/budget or unusable acquisition 503. Failed
+loads do not publish partial data. Three request walks detect observed changes,
+but do not independently prove full coverage or an upstream transaction snapshot.
+
+Only for an approved inspection session, set M01_CAPTURE_DIR to a private ignored
+base directory before starting the app. Each load creates a unique UTC subdirectory
+with unchanged numbered .body files, safe metadata.jsonl and output.jsonl. Never
+publish it. The current verification uses a private Compose override/bind under
+.local/inspect/M01/20261102T113313160223Z/; tracked Compose is unchanged.
+Do not restart an active verification load just to recreate evidence.
