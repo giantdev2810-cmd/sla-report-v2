@@ -379,4 +379,12 @@ After the checked handoff, "push và tạo pr" explicitly authorizes W10 commit/
 and a PR into main now, overriding its delivery timing only. Review acceptance
 is not explicit; merge remains separately gated.
 W10 documentation commit 61b7288 was pushed and
-[PR #13](https://github.com/giantdev2810-cmd/sla-report-v2/pull/13) is open into main.
+[PR #13](https://github.com/giantdev2810-cmd/sla-report-v2/pull/13) was opened into main
+and subsequently observed merged at 413ff43; the agent did not merge it.
+The subsequent "ghi vào decisions đi" approves the discussed frontend, memory
+and acquisition/cache trade-off wording as a W10 review revision. These edits
+were handed off locally for review. The user then requested "đẩy lên github và tạo pr",
+authorizing push and a new PR into main from the same W10 branch. W10 remains
+Awaiting review; publication and the observed merge do not establish acceptance.
+Trade-off revision 69a6ee3 was pushed and
+[PR #14](https://github.com/giantdev2810-cmd/sla-report-v2/pull/14) opened into main.
