@@ -78,6 +78,9 @@ In progress and unaccepted; earlier failed-load evidence is historical.
   tree was clean. Only W10's four documentation files are in scope; its approved
   commit/push/PR delivery is now explicitly requested by "push và tạo pr".
   This overrides W10's delivery timing only; review acceptance is not explicit.
+  W10 documentation commit 61b7288 was pushed and
+  [PR #13](https://github.com/giantdev2810-cmd/sla-report-v2/pull/13) opened into main.
+  Delivery bookkeeping follows in the same scope; no merge was performed.
 - Historical M01 branch docs/m01-mvp-plan, based on main 93d77fe (PR #11). The user requested
   "đẩy lên remote đi", explicitly approving this checkpoint commit/push before
   final acceptance. Reuse approved message `feat: deliver level-one SLA report MVP`.
@@ -96,8 +99,9 @@ In progress and unaccepted; earlier failed-load evidence is historical.
 
 ## Next action
 
-Publish W10's four documentation files and create its PR into main, as explicitly
-requested by "push và tạo pr". W10 stays Awaiting review; no merge is authorized.
+Review W10 in [PR #13](https://github.com/giantdev2810-cmd/sla-report-v2/pull/13),
+created as explicitly requested by "push và tạo pr". W10 stays Awaiting review;
+no merge is authorized.
 Review its attributed observation and AI-use account. Its documentation
 does not establish why these rows are null or prove report/data completeness.
 

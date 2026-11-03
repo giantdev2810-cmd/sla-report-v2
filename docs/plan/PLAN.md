@@ -378,3 +378,5 @@ The user subsequently approved the six-bullet "How I used AI" replacement with
 After the checked handoff, "push và tạo pr" explicitly authorizes W10 commit/push
 and a PR into main now, overriding its delivery timing only. Review acceptance
 is not explicit; merge remains separately gated.
+W10 documentation commit 61b7288 was pushed and
+[PR #13](https://github.com/giantdev2810-cmd/sla-report-v2/pull/13) is open into main.
