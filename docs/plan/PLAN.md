@@ -397,3 +397,5 @@ current endpoints and limitations while preserving the original submission
 instructions. S01 is Awaiting review. The later "đẩy lên github" authorizes
 commit/push now, overriding delivery timing only; PR creation remains pending
 explicit acceptance. No implementation or live verification is included.
+README update c784a77 was pushed to origin/chore/s01-submission-prep; no S01 PR
+has been created and no merge has been performed.

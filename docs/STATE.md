@@ -94,7 +94,9 @@ In progress and unaccepted; earlier failed-load evidence is historical.
 
 - Current branch: chore/s01-submission-prep, created from updated main e1b29b0.
   The starting working tree was clean. S01 delivery scope is README.md and its
-  PLAN/STATE/task record. The user requested commit/push now; no S01 PR exists.
+  PLAN/STATE/task record. README update c784a77 was pushed to
+  origin/chore/s01-submission-prep; delivery bookkeeping follows in the same
+  scope. No S01 PR exists and acceptance remains unrecorded.
 - Historical W10 branch: docs/w10-null-report-observation, created from main 2421e09
   after fetching origin/main and fast-forwarding local main. The starting working
   tree was clean. Only W10's four documentation files are in scope; its approved
