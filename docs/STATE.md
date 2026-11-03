@@ -1,10 +1,14 @@
 # Current project state
 
-Updated: 2026-11-02 after M01 checkpoint publication and the request to document
-current status and future priorities. No new runtime verification accompanies this update.
-M01 is In progress; final live report verification is blocked by the failed load.
-Planning is accepted; T05/W09/T04 are Done. The user now explicitly requested
-commit/push of the current M01 checkpoint; PR creation remains gated on acceptance.
+Updated: 2026-11-03 for [W10](plan/tasks/W10.md), Awaiting review.
+The candidate reports that the 12 October 2026 report contains rows showing only
+ID and site, with the remaining displayed fields blank/null. DECISIONS attributes
+this observation to the candidate; response bodies and event histories for these
+rows have not been independently checked. The cause remains unverified.
+The user subsequently approved the proposed six-bullet replacement for
+"How I used AI" with "ừ"; it is included in this W10 documentation revision.
+No new runtime verification accompanies this documentation update. M01 remains
+In progress and unaccepted; earlier failed-load evidence is historical.
 
 ## Scope and current behavior
 
@@ -69,7 +73,12 @@ commit/push of the current M01 checkpoint; PR creation remains gated on acceptan
 
 ## Git and preserved user work
 
-- Branch docs/m01-mvp-plan, based on main 93d77fe (PR #11). The user requested
+- Current branch: docs/w10-null-report-observation, created from main 2421e09
+  after fetching origin/main and fast-forwarding local main. The starting working
+  tree was clean. Only W10's four documentation files are in scope; its approved
+  commit/push/PR delivery is now explicitly requested by "push và tạo pr".
+  This overrides W10's delivery timing only; review acceptance is not explicit.
+- Historical M01 branch docs/m01-mvp-plan, based on main 93d77fe (PR #11). The user requested
   "đẩy lên remote đi", explicitly approving this checkpoint commit/push before
   final acceptance. Reuse approved message `feat: deliver level-one SLA report MVP`.
   The 19-file checkpoint was committed and pushed as 8245aef, with local/upstream
@@ -86,6 +95,11 @@ commit/push of the current M01 checkpoint; PR creation remains gated on acceptan
   still lack recorded acceptance. M02–M04 are not approved for implementation.
 
 ## Next action
+
+Publish W10's four documentation files and create its PR into main, as explicitly
+requested by "push và tạo pr". W10 stays Awaiting review; no merge is authorized.
+Review its attributed observation and AI-use account. Its documentation
+does not establish why these rows are null or prove report/data completeness.
 
 The reviewer-facing future-work priorities are recorded in DECISIONS: finish
 real-data level 1 verification, investigate completeness, measure/extend six-month
