@@ -24,6 +24,7 @@ validation snapshot; it does not grant permission to start another task.
 | [W08](tasks/W08.md) | Require local raw API inspection evidence | Done |
 | [W09](tasks/W09.md) | Align roadmap dependencies with the accepted architecture | Done |
 | [W10](tasks/W10.md) | Record user-reported blank/null SLA report rows | Awaiting review |
+| [S01](tasks/S01.md) | Update README for reviewers | Awaiting review |
 | [T01](tasks/T01.md) | Check environment availability | Done |
 | [T02](tasks/T02.md) | Install pinned dependencies and verify the starter | Done |
 | [T03 attempt 1](tasks/T03-attempt-1.md) | Inspect a bounded practice API sample (canceled first attempt) | Canceled |
@@ -388,3 +389,11 @@ authorizing push and a new PR into main from the same W10 branch. W10 remains
 Awaiting review; publication and the observed merge do not establish acceptance.
 Trade-off revision 69a6ee3 was pushed and
 [PR #14](https://github.com/giantdev2810-cmd/sla-report-v2/pull/14) opened into main.
+
+Current task: [S01](tasks/S01.md), narrowed by the user to the README update and
+its documentation record. Branch chore/s01-submission-prep was created from
+updated main e1b29b0 (PR #14 observed merged). The README explains setup, tests,
+current endpoints and limitations while preserving the original submission
+instructions. S01 is Awaiting review. The later "đẩy lên github" authorizes
+commit/push now, overriding delivery timing only; PR creation remains pending
+explicit acceptance. No implementation or live verification is included.

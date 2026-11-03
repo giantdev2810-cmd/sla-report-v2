@@ -1,6 +1,14 @@
 # Current project state
 
-Updated: 2026-11-03 for [W10](plan/tasks/W10.md), Awaiting review.
+Updated: 2026-11-03 for [S01](plan/tasks/S01.md), Awaiting review.
+The user narrowed the task to updating README and recording that update.
+README now describes Docker setup/tests, current endpoints, date/null behavior
+and acquisition/cache limitations; its original submission instructions remain.
+No new runtime checks or upstream requests accompany this documentation change.
+The later "đẩy lên github" explicitly authorizes commit/push now; it does not
+establish review acceptance or authorize a PR before that acceptance.
+
+Earlier W10 observations remain unresolved:
 The candidate reports that the 12 October 2026 report contains rows showing only
 ID and site, with the remaining displayed fields blank/null. DECISIONS attributes
 this observation to the candidate; response bodies and event histories for these
@@ -84,7 +92,10 @@ In progress and unaccepted; earlier failed-load evidence is historical.
 
 ## Git and preserved user work
 
-- Current branch: docs/w10-null-report-observation, created from main 2421e09
+- Current branch: chore/s01-submission-prep, created from updated main e1b29b0.
+  The starting working tree was clean. S01 delivery scope is README.md and its
+  PLAN/STATE/task record. The user requested commit/push now; no S01 PR exists.
+- Historical W10 branch: docs/w10-null-report-observation, created from main 2421e09
   after fetching origin/main and fast-forwarding local main. The starting working
   tree was clean. Only W10's four documentation files are in scope; its approved
   commit/push/PR delivery is now explicitly requested by "push và tạo pr".
@@ -110,6 +121,11 @@ In progress and unaccepted; earlier failed-load evidence is historical.
   still lack recorded acceptance. M02–M04 are not approved for implementation.
 
 ## Next action
+
+Review [README.md](../README.md) for S01: setup/test commands, current behavior
+and limits, and the preserved original submission instructions. S01 is Awaiting
+review. Commit/push is explicitly requested now; PR creation remains pending
+explicit acceptance. No merge or actual submission is authorized.
 
 Review the W10 trade-off revision in
 [PR #14](https://github.com/giantdev2810-cmd/sla-report-v2/pull/14), created as

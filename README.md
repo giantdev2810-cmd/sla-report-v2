@@ -1,47 +1,116 @@
-# Response-time report: starter kit
+# Response-time SLA report
 
-The rules are in the brief on your invitation page. Everything else is here.
+A Python 3.12 / FastAPI application that calculates helpdesk response-time SLA
+reports and responder totals. The page uses plain HTML, CSS and JavaScript;
+HTTPX retrieves upstream data, and a single application worker keeps the last
+successful data snapshot in memory. No database is required.
 
-```
-docs/contract.md    what your app must return (graded automatically)
-docs/rules.md       the brief's rules with the exact field names
-docs/api.md         the helpdesk API your app reads
-app/                the active Python/FastAPI application (unused starters removed)
-DECISIONS.md        fill this in; it is part of your submission
-docker-compose.yml  runs your app
-.env.example        copy to .env and paste in your practice API details
-```
-
-## Development workspace
-
-The configured application uses the Python/FastAPI starter in `app/`. See [docs/development.md](docs/development.md) for Docker and local Windows commands, credential handling, and setup verification.
+The level-one report path is implemented. Full live-data correctness and coverage
+remain unverified; six-month readiness/performance, live updates and browsing
+are unfinished. See [DECISIONS.md](DECISIONS.md) for assumptions, API findings,
+AI assistance and trade-offs.
 
 ## Setup
 
-You need Docker (with Compose) and Git.
+You need Git and Docker with Compose, using Linux containers. Run the following
+from the root of a cloned repository.
+
+1. Copy `.env.example` to `.env` (`cp .env.example .env` in a POSIX shell,
+   or `Copy-Item .env.example .env` in PowerShell).
+2. Set `HELPDESK_URL` and `HELPDESK_TOKEN` in `.env` to the supplied API details.
+3. Build and start the app:
 
 ```bash
-git init && git add -A && git commit -m "chore: start from the kit"
-cp .env.example .env                 # paste in HELPDESK_URL and HELPDESK_TOKEN
-# app/ already contains the active Python/FastAPI application
-docker compose up --build            # your app on http://localhost:8080
-curl http://localhost:8080/health    # {"ok": true}
-docker compose run --rm app test     # your tests, exit 0 = pass
+docker compose up --build
 ```
 
-Check the API works:
+Open <http://localhost:8080>, select **From** and **To**, and click **Run report**.
+For a single day, select the same date in both fields. The first report loads
+upstream data synchronously and may take several minutes. The page shows loading,
+error or result states; it does not stream partial rows.
+
+Health check, in another terminal:
 
 ```bash
-curl -H "Authorization: Bearer $HELPDESK_TOKEN" "$HELPDESK_URL/v1/statuses"
+curl http://localhost:8080/health
 ```
 
-You may replace the starter with your own Node, Rails or Python app. Keep these working:
-`docker compose up`, `docker compose run --rm app test`, port 8080, a service named `app`, and
-reading `HELPDESK_URL` and `HELPDESK_TOKEN` from the environment. You may add a database or cache
-to `docker-compose.yml`.
+Expected health response: `200 {"ok": true}`. Health does not establish report
+readiness or correctness. The Compose service is named `app`, listens on port
+`8080`, and reads `HELPDESK_URL` and `HELPDESK_TOKEN` from the environment.
 
-No Docker? Run the starter directly with those two variables set, but we grade with Docker, so
-check it builds before you submit.
+Keep `.env`, the private invitation `Requirements.md` and `.local/inspect/`
+captures out of public repositories and submission archives.
+
+## Tests
+
+Run the test suite in Docker:
+
+```bash
+docker compose run --rm app test
+```
+
+Exit code zero means the tests passed. The suite uses synthetic inputs and mock
+HTTP responses to check SLA rules, aggregation, acquisition, API behavior and
+capture. It does not prove correctness or completeness on the grading dataset.
+
+For local Windows setup and commands, see [docs/development.md](docs/development.md).
+Docker is the grading runtime; check the build before submitting.
+
+## Endpoints and report behavior
+
+| Endpoint | Current behavior |
+| --- | --- |
+| `GET /` | Date selection, request rows and responder totals |
+| `GET /health` | `200 {"ok": true}` |
+| `GET /ready` | `503 {"ready": false}`; six-month readiness is unfinished |
+| `GET /api/sla-report?from=YYYY-MM-DD&to=YYYY-MM-DD` | SLA report for the inclusive site-local creation-date range |
+| `GET /api/requests` | `501`; level-four browsing is unfinished |
+
+For example, selecting 12 October 2026 in both date fields sends
+`GET /api/sla-report?from=2026-10-12&to=2026-10-12` and, on success, displays
+the response's `requests` and `responders` arrays. Requests that are canceled,
+deleted or merged are excluded. The report uses the acquired event histories
+for response/completion rules and the current staff names.
+
+The page displays JSON `null` as `—`. Under rule 7, no eligible first response
+means responder and response metrics are null; no eligible completion or no
+deadline means completed-late is null. Nonconsecutive IDs alone do not demonstrate
+missing records. The reported blank/null rows have not been individually verified.
+
+Missing, invalid, duplicate or reversed dates return `400`. Malformed or
+conflicting acquired data returns `502`; transport, budget or unusable-load
+failures return `503`. Detected acquisition inconsistencies fail the load rather
+than publish its partial result. Exact shapes and business rules are in the
+[contract](docs/contract.md) and [rules](docs/rules.md).
+
+## Known limitations
+
+- Acquisition scans request pages three times and loads the needed per-request
+  event pages sequentially. Changing request data can cause the reconciliation
+  check to reject a load. Agreeing walks do not prove complete upstream coverage
+  or a transactionally consistent snapshot.
+- Loads are capped at 6000 upstream attempts and thirty minutes, with bounded
+  retries and rate pacing. These limits are not the level-two performance targets;
+  those targets have not been demonstrated.
+- The last successful range is cached in process-local memory. Repeating that
+  range or a subrange reuses its snapshot without refreshing upstream data.
+  Another range outside cached coverage requires a new load; restart loses the
+  cache. There is no automatic live refresh or shared multi-worker store.
+- Six-month readiness, live updates within 60 seconds and browse filters,
+  sorting and cursor pagination remain unfinished. Report code and offline tests
+  are not a claim that any grading level has been independently verified.
+
+## Code and reference documents
+
+- `app/app/`: HTTP endpoints, upstream client, acquisition, snapshot store and
+  pure SLA/report calculations.
+- `app/tests/`: offline tests; `app/static/index.html`: the report page.
+- [docs/api.md](docs/api.md): documented upstream endpoints and fields.
+- [docs/architecture.md](docs/architecture.md): module responsibilities and data flow.
+- [DECISIONS.md](DECISIONS.md): rationale, findings, AI use and future work.
+
+The original submission instructions follow.
 
 ## Submitting
 
