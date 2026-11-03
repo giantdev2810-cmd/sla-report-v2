@@ -25,7 +25,7 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 
 <!-- Which tools, what you asked, what came back wrong, what you changed. "I didn't use AI" is fine too. -->
 
-- Used Codex to analyze the brief, SLA rules, API documentation and grading contract, and to break the work into tasks ordered by the assignment's levels.
+- Used Codex CLI to analyze the brief, SLA rules, API documentation and grading contract, and to break the work into tasks ordered by the assignment's levels.
 
 - Discussed and agreed on a candidate-controlled workflow with Codex: scope and technical decisions require my approval before implementation, followed by explanations and review. I later requested grouping the remaining level-one work into a runnable MVP.
 
