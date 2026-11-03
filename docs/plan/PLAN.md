@@ -23,6 +23,7 @@ validation snapshot; it does not grant permission to start another task.
 | [W07](tasks/W07.md) | Require a separate branch and PR for each new task | Done |
 | [W08](tasks/W08.md) | Require local raw API inspection evidence | Done |
 | [W09](tasks/W09.md) | Align roadmap dependencies with the accepted architecture | Done |
+| [W10](tasks/W10.md) | Record user-reported blank/null SLA report rows | Awaiting review |
 | [T01](tasks/T01.md) | Check environment availability | Done |
 | [T02](tasks/T02.md) | Install pinned dependencies and verify the starter | Done |
 | [T03 attempt 1](tasks/T03-attempt-1.md) | Inspect a bounded practice API sample (canceled first attempt) | Canceled |
@@ -367,3 +368,15 @@ specific publication exception does not accept M01, authorize merge, publish
 ignored evidence/credentials or change the general review gate for later tasks.
 Full publication 9e5fb54 was pushed; [PR #12](https://github.com/giantdev2810-cmd/sla-report-v2/pull/12)
 targets main. M01 remains In progress and no merge was performed.
+
+Current documentation checkpoint: [W10](tasks/W10.md) records the candidate's
+12 October report observation without claiming an independently verified cause.
+The user approved the concrete W10 proposal with "duyệt". W10 is Awaiting review.
+This does not accept M01 or authorize further API inspection.
+The user subsequently approved the six-bullet "How I used AI" replacement with
+"ừ"; the W10 documentation revision includes it and still awaits final review.
+After the checked handoff, "push và tạo pr" explicitly authorizes W10 commit/push
+and a PR into main now, overriding its delivery timing only. Review acceptance
+is not explicit; merge remains separately gated.
+W10 documentation commit 61b7288 was pushed and
+[PR #13](https://github.com/giantdev2810-cmd/sla-report-v2/pull/13) is open into main.

@@ -19,19 +19,23 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 - Offline review of the two saved change-feed pages found ten rows but only eight distinct `seq` values: page 1's last two rows reappeared first on page 2 with identical payloads. All five request-payload occurrences had `updated_at` later than the change's `at`, supporting the documented current-payload behavior rather than event-time snapshots. The sample does not establish general freshness, cursor expiry, or staff-change handling.
 - The request sample covers 30 October through 2 November in UTC, not the graded 12-18 October range. The selected request had one pending event with a null actor, so first response, reversals, completion/reopening, meaningful event ordering, and event pagination remain unexercised; only two of three sites' holiday lists were sampled.
 - The candidate reports that the feed does not contain the full history. Offline review of the retained T03 bodies found two unfinished change pages (ten rows, eight distinct seq values, four request payload IDs, both has_more=true). This sample cannot independently establish the feed's historical coverage or retention window.
+- The candidate reports that the 12 October 2026 report contains rows showing only ID and site, with the remaining displayed fields blank/null. The corresponding response bodies and event histories have not been independently checked, so the cause remains unverified.
 
 ## How I used AI
 
 <!-- Which tools, what you asked, what came back wrong, what you changed. "I didn't use AI" is fine too. -->
 
-- Used Codex to read the brief and starter documentation, configure the development environment, and document verification results.
-- Used Codex to create a local `write-decisions` skill and repository context instructions. `docs/STATE.md` separates inspected implementation from historical test results so a later session can resume without treating unverified work as complete.
-- Agreed with Codex on a candidate-controlled workflow: each small task and its technical decisions require approval before implementation, followed by a code walkthrough and candidate review. `docs/plan/PLAN.md` records scope and approval separately from implementation and verification so generated code remains reviewable.
-- Codex adapted the canceled inspection script to retain local raw bodies and generated offline tests for byte preservation, request limits, safe output, and failure handling. Eleven tests passed before the replacement live run; Codex reconciled eleven saved bodies with metadata/output, then identified repeated feed sequences and post-change payload timestamps through offline review. The local `write-decisions` skill guided these evidence-based notes; capture checks do not establish SLA correctness.
-- Codex initially proposed feed-only bootstrap without established historical coverage. After the candidate confirmed that history is incomplete, Codex revised the approved T04 design to request/event baseline loading and feed updates, leaving other questions explicitly open. The local `write-decisions` skill guided separating candidate-reported facts, bounded capture evidence, and design choices. The candidate also requested PR creation only after review and acceptance; this architecture is not an implemented or tested report.
-- Codex implemented the pure rule-2 filter and synthetic tests after candidate approval, including the agreed non-restoring reversal chain. Ten rule cases and the existing health test passed; these checks cover the helper's behavior, not live data completeness or the remaining SLA rules. The local `write-decisions` skill guided recording the interpretation as an assumption rather than an API finding.
+- Used Codex to analyze the brief, SLA rules, API documentation and grading contract, and to break the work into tasks ordered by the assignment's levels.
 
-- Codex implemented the approved grouped MVP with pure rules, report aggregation, bounded acquisition, atomic copied snapshots, endpoint/UI and private capture, then generated mock/expected-value tests. The final suite passed 53 tests locally and in Docker. The first root-directory invocation failed imports and was corrected to run from app/. Live acquisition failed after three transport errors, so generated code and passing mock tests are not claimed as real-data report validation.
+- Discussed and agreed on a candidate-controlled workflow with Codex: scope and technical decisions require my approval before implementation, followed by explanations and review. I later requested grouping the remaining level-one work into a runnable MVP.
+
+- Used Codex to draft and maintain DECISIONS.md, architecture notes, task records and session handoffs. Codex also helped create a local write-decisions skill to distinguish requirements, assumptions, observations and unverified claims.
+
+- Used Codex to explore implementation choices and their costs. Codex initially proposed bootstrapping from the change feed alone; after I pointed out that it lacked complete history, the design changed to loading baseline requests and full event histories.
+
+- Used Codex to implement the SLA calculations, data acquisition, in-memory storage, report endpoint and page, and to generate synthetic and mock tests. Codex ran checks locally and in Docker; the recorded suite passed 53 tests. These checks do not independently establish correctness on the live dataset.
+
+- Used Codex to build private API-response capture and analyze retained evidence, including repeated pagination rows and request changes between acquisition walks. I performed manual report checks and reported unexpected results; Codex helped document them without treating unverified explanations as confirmed causes.
 
 ## Trade-offs and what I would do next
 
