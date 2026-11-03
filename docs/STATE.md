@@ -7,6 +7,15 @@ this observation to the candidate; response bodies and event histories for these
 rows have not been independently checked. The cause remains unverified.
 The user subsequently approved the proposed six-bullet replacement for
 "How I used AI" with "ừ"; it is included in this W10 documentation revision.
+The user then requested "ghi vào decisions đi" after discussing trade-offs.
+The W10 revision documents plain frontend tooling, in-memory storage
+costs, sequential acquisition and stale-cache behavior. The candidate also reports
+that results sometimes appear only after clicking the screen; this has not been
+reproduced or diagnosed. The inspected page calls render after receiving JSON;
+the symptom is not established as a consequence of using plain JavaScript.
+The user then requested "đẩy lên github và tạo pr", authorizing publication of
+this revision. PR #13 was observed merged at 413ff43; the agent did not merge it.
+A new PR into main will carry the revision from the same approved W10 branch.
 No new runtime verification accompanies this documentation update. M01 remains
 In progress and unaccepted; earlier failed-load evidence is historical.
 
@@ -79,8 +88,9 @@ In progress and unaccepted; earlier failed-load evidence is historical.
   commit/push/PR delivery is now explicitly requested by "push và tạo pr".
   This overrides W10's delivery timing only; review acceptance is not explicit.
   W10 documentation commit 61b7288 was pushed and
-  [PR #13](https://github.com/giantdev2810-cmd/sla-report-v2/pull/13) opened into main.
-  Delivery bookkeeping follows in the same scope; no merge was performed.
+  [PR #13](https://github.com/giantdev2810-cmd/sla-report-v2/pull/13) was opened into main
+  and later observed merged at 413ff43. No agent merge was performed. The later
+  trade-off revision is explicitly authorized for push and a new PR into main.
 - Historical M01 branch docs/m01-mvp-plan, based on main 93d77fe (PR #11). The user requested
   "đẩy lên remote đi", explicitly approving this checkpoint commit/push before
   final acceptance. Reuse approved message `feat: deliver level-one SLA report MVP`.
@@ -99,9 +109,9 @@ In progress and unaccepted; earlier failed-load evidence is historical.
 
 ## Next action
 
-Review W10 in [PR #13](https://github.com/giantdev2810-cmd/sla-report-v2/pull/13),
-created as explicitly requested by "push và tạo pr". W10 stays Awaiting review;
-no merge is authorized.
+Publish the W10 trade-off revision and create a new PR into main as explicitly
+requested by "đẩy lên github và tạo pr". W10 stays Awaiting review;
+no agent merge is authorized.
 Review its attributed observation and AI-use account. Its documentation
 does not establish why these rows are null or prove report/data completeness.
 

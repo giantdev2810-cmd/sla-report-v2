@@ -41,11 +41,12 @@ Write in English. Short bullet points are fine. Reviewers read this file alongsi
 
 <!-- What you left out to stay within 3 hours, and what you would do with more time. -->
 
+- I used plain HTML, CSS and JavaScript to minimize setup and build tooling within the time budget. The UI is a basic report table, with DOM updates, loading and error handling managed manually.
 - A bounded sample with private raw capture permits detailed offline investigation without spending further API calls. It does not prove full coverage, and raw files are unavailable to public-repository reviewers; the task record provides sanitized evidence while the source bodies remain on the local machine.
 - M01 loads baseline data from request pages and full per-request event histories rather than relying on incomplete feed history. This has a higher HTTP cost; initial conflict/retry/reconciliation policies are implemented, but acquisition completeness is unproven and feed updates remain deferred.
-- M01 uses one worker with process-local memory rather than SQLite to limit database work. Restart requires a full reload, multiple workers would have separate stores, and copied snapshots add memory/copying cost. Pure SLA calculations, acquisition and storage are implemented; successful real-data report validation is still missing.
+- I used one worker with process-local memory instead of a database to avoid schema, migration and persistence setup within the time budget. Restarting requires a full reload, workers cannot share the store, and copied snapshots increase memory usage. Successful real-data report validation remains incomplete.
 
-- M01 uses three full request walks and sequential bounded HTTP to detect observed inconsistencies before publication, at substantial first-load cost. Stable walks cannot prove that the upstream omitted nothing, and no automatic refresh is provided; snapshots remain cached for subranges until another load or restart.
+- M01 uses three full request walks and sequential bounded HTTP to detect observed inconsistencies before publication, at substantial first-load cost. Sequential requests simplify rate and retry control but increase initial loading time; performance targets remain unverified. Stable walks cannot prove that the upstream omitted nothing, and no automatic refresh is provided; snapshots remain cached for subranges until another load or restart. Running the report again for a cached range reuses that snapshot rather than fetching fresh upstream data, so the report may be stale.
 - Ambiguous/nonexistent local wall times fail rather than silently selecting a DST offset. With more time, I would clarify the intended business interpretation and extend timezone/DST fixtures before supporting those cases.
 
 With more time, I would prioritize the following work in the assignment's level order:
