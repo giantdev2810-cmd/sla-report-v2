@@ -15,7 +15,9 @@ reproduced or diagnosed. The inspected page calls render after receiving JSON;
 the symptom is not established as a consequence of using plain JavaScript.
 The user then requested "đẩy lên github và tạo pr", authorizing publication of
 this revision. PR #13 was observed merged at 413ff43; the agent did not merge it.
-A new PR into main will carry the revision from the same approved W10 branch.
+The revision was pushed as 69a6ee3 and
+[PR #14](https://github.com/giantdev2810-cmd/sla-report-v2/pull/14) opened into main
+from the same approved W10 branch. Delivery bookkeeping follows in the same scope.
 No new runtime verification accompanies this documentation update. M01 remains
 In progress and unaccepted; earlier failed-load evidence is historical.
 
@@ -109,8 +111,9 @@ In progress and unaccepted; earlier failed-load evidence is historical.
 
 ## Next action
 
-Publish the W10 trade-off revision and create a new PR into main as explicitly
-requested by "đẩy lên github và tạo pr". W10 stays Awaiting review;
+Review the W10 trade-off revision in
+[PR #14](https://github.com/giantdev2810-cmd/sla-report-v2/pull/14), created as
+explicitly requested by "đẩy lên github và tạo pr". W10 stays Awaiting review;
 no agent merge is authorized.
 Review its attributed observation and AI-use account. Its documentation
 does not establish why these rows are null or prove report/data completeness.

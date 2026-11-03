@@ -386,3 +386,5 @@ and acquisition/cache trade-off wording as a W10 review revision. These edits
 were handed off locally for review. The user then requested "đẩy lên github và tạo pr",
 authorizing push and a new PR into main from the same W10 branch. W10 remains
 Awaiting review; publication and the observed merge do not establish acceptance.
+Trade-off revision 69a6ee3 was pushed and
+[PR #14](https://github.com/giantdev2810-cmd/sla-report-v2/pull/14) opened into main.
